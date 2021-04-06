@@ -1,0 +1,352 @@
+// init ClipboardJS
+new ClipboardJS("#token");
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get("adapter_token");
+
+// pubsub topics: https://github.com/CodeLabClub/codelab_adapter_client_python/blob/master/codelab_adapter_client/topic.py
+
+const extensions_bar = new Vue({
+    el: "#app",
+    data: {
+        activeName: "first", //tab page
+        token: token,
+        logs: [],
+        status: "disconnected", // from adapter， connected
+        version: "", // from adapter
+        exts_statu: {},
+        nodes_statu: {},
+        //checkedExtensions: [],
+        //extensions: ["extension_eim", "extension_eim2"],
+        // https://scratch.codelab.club/projects/editor?adapter_token=${token}
+        links: {
+            "CodeLab Scratch": `https://scratch-beta.codelab.club?adapter_token=${token}`, // todo adapter_host, 根据 URL判断
+        },
+        showMenu: false,
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        form: {
+            plugin_url: "",
+            select_url: "",
+        },
+        formLabelWidth: "120px",
+        isCollapse: false,
+        extensinFilter: undefined,
+        extNameFilter: '',
+        nodeFilter: undefined,
+        nodeNameFilter: '',
+        languanges: window.language,
+        currentLanguage: localStorage.getItem('adapterLanguage') || 'zh-cn',
+        showTypeToggle: true,   // true: ext; false: node
+        extCurrentPage: 1,
+        nodeCurrentPage: 1,
+        extPageSize: 10,
+        nodePageSize: 10
+    },
+    computed: {
+        language() {
+            localStorage.setItem('adapterLanguage', this.currentLanguage)
+            if (this.currentLanguage === 'en') {
+                ELEMENT.locale(ELEMENT.lang.en)
+            } else {
+                ELEMENT.locale(ELEMENT.lang.zhCN)
+            }
+            return this.languanges[this.currentLanguage]
+        },
+        filtedExtsLenght () {
+            let filtedObj = {}
+            Object.keys(this.exts_statu)
+            .forEach(key => {
+                if (this.extensinFilter === undefined) {
+                    if (!this.extNameFilter || key.includes(this.extNameFilter)) {
+                        filtedObj[key] = this.exts_statu[key]
+                    }
+                } else {
+                    if (this.exts_statu[key].is_running === this.extensinFilter) {
+                        if (!this.extNameFilter || key.includes(this.extNameFilter)) {
+                            filtedObj[key] = this.exts_statu[key]
+                        }
+                    }
+                }
+            })
+            return Object.keys(filtedObj).length
+        },
+        filtedExts () {
+            let filtedObj = {}
+            Object.keys(this.exts_statu)
+            .slice((this.extCurrentPage - 1) * this.extPageSize, this.extCurrentPage * this.extPageSize)
+            .forEach(key => {
+                if (this.extensinFilter === undefined) {
+                    if (!this.extNameFilter || key.includes(this.extNameFilter)) {
+                        filtedObj[key] = this.exts_statu[key]
+                    }
+                } else {
+                    if (this.exts_statu[key].is_running === this.extensinFilter) {
+                        if (!this.extNameFilter || key.includes(this.extNameFilter)) {
+                            filtedObj[key] = this.exts_statu[key]
+                        }
+                    }
+                }
+            })
+            console.log('filtedExt', filtedObj)
+            return filtedObj
+        },
+        filtedNodesLength () {
+            let filtedObj = {}
+            Object.keys(this.nodes_statu)
+            .forEach(key => {
+                if (this.nodeFilter === undefined) {
+                    if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+                        filtedObj[key] = this.nodes_statu[key]
+                    }
+                } else {
+                    if (this.nodes_statu[key].is_running === this.nodeFilter) {
+                        if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+                            filtedObj[key] = this.nodes_statu[key]
+                        }
+                    }
+                }
+            })
+            return Object.keys(filtedObj).length
+        },
+        filtedNodes () {
+            let filtedObj = {}
+            Object.keys(this.nodes_statu)
+            .slice((this.nodeCurrentPage - 1) * this.nodePageSize, this.nodeCurrentPage * this.nodePageSize)
+            .forEach(key => {
+                if (this.nodeFilter === undefined) {
+                    if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+                        filtedObj[key] = this.nodes_statu[key]
+                    }
+                } else {
+                    if (this.nodes_statu[key].is_running === this.nodeFilter) {
+                        if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+                            filtedObj[key] = this.nodes_statu[key]
+                        }
+                    }
+                }
+            })
+            console.log('filtedNode', filtedObj)
+            return filtedObj
+        }
+    },
+    methods: {
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        blur(event) {
+            //失焦
+            console.log("blur");
+        },
+        handleClick(val) {
+            console.log("clicked:", val);
+            if (
+                val == "log_open" ||
+                val == "extensions_open_dir" ||
+                val == "extensions_update" ||
+                val == "open_user_dir" ||
+                val == "refresh_env"
+            ) {
+                this.adapter_client.menu_action(val);
+            }
+        },
+        exit_adapter_app() {
+            this.adapter_client.exit_adapter_app();
+        },
+        handleSelect(item) {
+            // 填充内容
+
+            console.log("select extension name", item.value);
+            this.form.plugin_url = item.url;
+            console.log("select extension url", item.url);
+        },
+        createFilter(queryString) {
+            return (extenion) => {
+                let isinclude = extenion.value
+                    .toLowerCase()
+                    .includes(queryString.toLowerCase());
+                return isinclude;
+            };
+        },
+        querySearch(queryString, cb) {
+            let community_plugins = this.community_plugins;
+            // console.log("querySearch: ", this.community_plugins)
+            let results = queryString
+                ? community_plugins.filter(this.createFilter(queryString))
+                : community_plugins;
+            console.log("querySearch filter: ", results);
+            // 调用 callback 返回建议列表的数据
+            cb(results);
+        },
+        plugin_download: function () {
+            //url match github...
+            // 区分手动输入和选择
+            let plugin_url;
+            plugin_url = this.form.plugin_url;
+
+            console.log("download", plugin_url);
+            let is_url_valid = false;
+            console.log("download plugin:", plugin_url);
+            // extension, 预加载 考虑安全
+            let whitelist = [
+                "https://github.com/CodeLabClub/codelab_adapter_extensions",
+                "https://raw.githubusercontent.com/CodeLabClub/codelab_adapter_extensions",
+                "https://adapter.codelab.club",
+                "http://adapter.codelab.club",
+            ];
+
+            whitelist.forEach(function (item, index, array) {
+                // extension 需要在白名单里
+                if (
+                    (plugin_url.startsWith(item) &&
+                        plugin_url.includes("extension_")) ||
+                    plugin_url.includes("node_")
+                ) {
+                    is_url_valid = true;
+                }
+            });
+            if (is_url_valid) {
+                // begin to download，todo 放在client里
+                this.adapter_client.download(plugin_url);
+                this.dialogFormVisible = false;
+                this.form.plugin_url = "";
+                return;
+            } else {
+                // todo notify 有换行问题，在python做好换行
+                let notify_message =
+                    "Please download extension from https://github.com/CodeLabClub/codelab_adapter_extensions or https://adapter.codelab.club/extensions_nodes_mirrors/";
+                if (plugin_url.includes("extension_")) {
+                    this.$message({
+                        // showClose: true,
+                        message: notify_message,
+                        type: "warning", // warning
+                    });
+                }
+            }
+        },
+        check: function (state, node, pluginType) {
+            // console.log(`${e.target.value} ${e.target.checked}`);
+            if (this.status !== "connected!") {
+                console.log("connected:", this.status);
+                return;
+            } // 不继续， todo 条件不满足，不切换
+            console.log(`${node} ${state}`);
+            const node_name = node;
+            let turn;
+            if (state === true) {
+                turn = "start";
+                console.log("start");
+            } else {
+                turn = "stop";
+                console.log("stop");
+            }
+            this.adapter_client.operate_node_extension(
+                turn,
+                node_name,
+                pluginType
+            );
+        },
+        //
+
+        // 在软件启动自检里做
+        update_adapter_status(content) {
+            let adapter_version = content.version;
+            this.version = adapter_version;
+            // todo
+            /*
+            console.log(`webui_version -> ${this.adapter_client.webui_version}; adapter_version:${adapter_version}`);
+            if (this.adapter_client.webui_version === void(0) || adapter_version > this.adapter_client.webui_version){
+                console.warn("webui_version is old version!")
+                this.$notify({type:"warning",message:"Web UI 版本太低，5秒后将自动更新, 完成后需要重新运行"})
+                setTimeout(() => {
+                    this.adapter_client.menu_action('extensions_update');
+                }, 5000);
+            }
+            */
+            // 如果 webui_version 更低，则自动更新插件
+        },
+        error_message_callback(error_message) {
+            this.$message(error_message);
+        },
+        notify_callback(notify_message) {
+            this.$notify(notify_message);
+        },
+        update_nodes_status(nodes_status) {
+            this.exts_statu = nodes_status["exts_status_and_info"];
+            this.nodes_statu = nodes_status["node_status_and_info"];
+            this.$loading().close();
+        },
+        onConnect() {
+            this.status = "connected!";
+        },
+        onDisconnect(reason) {
+            alert("已退出 (exited)");
+            this.status = `disconnect! ${reason}`;
+            let notify_message = {
+                message: `disconnect! ${reason}`,
+                type: "error", // warning
+            };
+            this.$notify(notify_message);
+            this.$loading({ fullscreen: true });
+            // alert("请重启()")
+            //setTimeout(() => {
+            //}, 500);
+        },
+        onMessage(msg){
+            console.log('message to app...');
+        },
+        onAdapterPluginMessage(msg){
+            console.log('message to app...')
+        },
+        node_statu_change_callback(extension_node_name, content) {
+            const status_checked_map = { start: true, stop: false };
+            if (extension_node_name.startsWith("extension_")) {
+                this.exts_statu[extension_node_name]["is_running"] =
+                    status_checked_map[content];
+                console.log(`extension statu change to ${content}`);
+            }
+            if (extension_node_name.startsWith("node_")) {
+                this.nodes_statu[extension_node_name]["is_running"] =
+                    status_checked_map[content];
+                console.log(`node statu change to ${content}`);
+            }
+        },
+    },
+    created: function () {
+        // init
+        this.adapter_client = new AdapterBaseClient(
+            // 传递到内部，修改
+            this.onConnect,
+            this.onDisconnect,
+            this.onMessage,
+            this.onAdapterPluginMessage,
+            this.update_nodes_status,
+            this.node_statu_change_callback,
+            this.notify_callback,
+            this.error_message_callback,
+            this.update_adapter_status
+        );
+        window.adapter_client = this.adapter_client; // 方便做实验， linda: await adapter_client.linda_out([1,2,3]);  await adapter_client.linda_dump(["dump"])
+    },
+    mounted() {
+        //timestamp
+        let timestamp = new Date().getTime();
+        axios
+            .get(
+                `https://adapter.codelab.club/extensions_nodes_mirrors/extensions_nodes.json?timestamp=${timestamp}`
+            )
+            .then((response) => {
+                console.log("market extenions:", response.data.extensions);
+                console.log("market nodes:", response.data.nodes);
+                this.community_plugins = response.data.extensions.concat(
+                    response.data.nodes
+                ); // //fetch Community extension
+            })
+            .catch((error) => {
+                console.log(error);
+                this.errored = true;
+            });
+    },
+});
