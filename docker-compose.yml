@@ -6,6 +6,6 @@ services:
     volumes:
       - ./adapter.conf:/etc/nginx/conf.d/adapter.conf
     ports:
-      - "8080:80"
+      - "8200:80"
     container_name: adapter_webui
     command: /bin/bash -c "envsubst < /etc/nginx/conf.d/adapter.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"

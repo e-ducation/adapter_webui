@@ -59,14 +59,11 @@ class AdapterBaseClient {
 
         console.log(window.__static);
 
-        // if (!adapterHost) {
-        //     adapterHost = window.__static
-        //         ? "127.0.0.1"
-        //         : "codelab-adapter.codelab.club";
-        // }
         if (!adapterHost) {
-            adapterHost = "127.0.0.1";
-        }
+            adapterHost = window.__static
+                ? "127.0.0.1"
+                : "codelab-adapter.codelab.club";
+        }        
 
         console.log("!!!!!!");
         console.log(adapterHost);
