@@ -52,22 +52,12 @@ class AdapterBaseClient {
 
         const url = new URL(window.location.href);
         let adapterHost = url.searchParams.get("adapter_host"); // 支持树莓派(分布式使用)
-        
-        console.log("?????");
-        console.log(adapterHost);
-        console.log("?????");
-
-        console.log(window.__static);
 
         if (!adapterHost) {
             adapterHost = window.__static
                 ? "127.0.0.1"
                 : "codelab-adapter.codelab.club";
-        }        
-
-        console.log("!!!!!!");
-        console.log(adapterHost);
-        console.log("!!!!!!");
+        }
 
         this.adapterHost = adapterHost;
         const urlParams = new URLSearchParams(window.location.search);
