@@ -229,8 +229,8 @@ section#app div.panel >.container .playgroundList .list .item {
     display: flex;
 }
 section#app div.panel >.container .playgroundList .list .item .extensionImg {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 80px;
     flex-shrink: 0;
     border-radius: 4px;
 }
