@@ -60,6 +60,14 @@
     background-color: #5080bb;
     color: white;
 }
+.el-msg {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 202px;
+    font-size: 10px;
+    color: #898b8f;
+}
 body {
     background-color: #f7f9fc;
 }
