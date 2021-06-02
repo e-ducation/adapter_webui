@@ -168,16 +168,16 @@ todo
                         {{language.discuss}}
                     </el-menu-item>
                 </a> -->
-                <a target="_blank" :href="'/webdebug?adapter_token='+token">
+                <!-- <a target="_blank" :href="'/webdebug?adapter_token='+token">
                     <el-menu-item class="menuItem">
                         {{language.debug}}
                     </el-menu-item>
-                </a>
-                <a target="_blank" :href="'/web_log_page?adapter_token='+token">
+                </a> -->
+                <!-- <a target="_blank" :href="'/web_log_page?adapter_token='+token">
                     <el-menu-item class="menuItem">
                     {{language.viewLog}}
                     </el-menu-item>
-                </a>
+                </a> -->
                 <el-menu-item
                     class="menuItem"
                     @click="handleClick('open_user_dir')"
@@ -190,7 +190,7 @@ todo
                     <img src="/static/icon-environment-nor.png">
                     <span slot="title">{{language.env}}</span>
                 </template>
-                <a
+                <!-- <a
                     target="_blank"
                     :href="'/env?adapter_token='+token"
                 >
@@ -198,18 +198,18 @@ todo
                     {{language.view}}
 
                     </el-menu-item>
-                </a>
+                </a> -->
                 <el-menu-item class="menuItem" @click="handleClick('refresh_env')">
                         {{language.refresh}}
                 </el-menu-item>
-                <a
+                <!-- <a
                     target="_blank"
                     :href="'/api/list_nodes_pid?adapter_token='+token"
                 >
                     <el-menu-item class="menuItem">
                     {{language.runningNode}}
                     </el-menu-item>
-                </a>
+                </a> -->
             </el-submenu>
             <!-- <el-submenu index="6">
                 <template slot="title">
