@@ -8,154 +8,172 @@ todo
     关闭之前检查 扩展是否都关闭(自动关闭)
 -->
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <script src="/static/axios.min.js"></script>
-        <script src="/static/vue.min.js"></script>
-        <script src="/static/socket.io.slim.js"></script>
-        <link rel="stylesheet" href="/static/normalize.css" />
-        <link rel="stylesheet" href="/static/element-ui_2_12_0_index.css" />
-        <script src="/static/element-ui_2_12_0_index.js"></script>
-        <script src="/static/element-en.js"></script>
-        <script src="/static/element-zh-CN.js"></script>
-        <script src="/static/clipboard.min.js"></script>
-        <link rel="shortcut icon" href="/static/yingli_adapter.ico" />
-        <title>英荔 Adapter 控制中心</title>
-        <style>
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                background-color: white;
-            }
-            section#app {
-                text-align: center;
-                min-width: 500px;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="/static/axios.min.js"></script>
+    <script src="/static/vue.min.js"></script>
+    <script src="/static/socket.io.slim.js"></script>
+    <link rel="stylesheet" href="/static/normalize.css" />
+    <link rel="stylesheet" href="/static/element-ui_2_12_0_index.css" />
+    <script src="/static/element-ui_2_12_0_index.js"></script>
+    <script src="/static/element-en.js"></script>
+    <script src="/static/element-zh-CN.js"></script>
+    <script src="/static/clipboard.min.js"></script>
+    <link rel="shortcut icon" href="/static/yingli_adapter.ico" />
+    <title>英荔 Adapter 控制中心</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background-color: white;
+      }
+      section#app {
+        text-align: center;
+        min-width: 500px;
+      }
 
-            .el-tabs__nav-scroll { text-align: center; }
-            .el-tabs__nav { display: inline-block; float: unset;  }
+      .el-tabs__nav-scroll {
+        text-align: center;
+      }
+      .el-tabs__nav {
+        display: inline-block;
+        float: unset;
+      }
 
-            .header {
-                display: none;
-                padding: 20px 0;
-                background-color: #4e97fe;
-                color: white;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-                box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.35);
-            }
-            .header div.container {
-                width: 500px;
-                margin: 0 auto;
-            }
-            div.links {
-                display: flex;
-                justify-content: center;
-                margin-top: 15px;
-            }
-            div.link a {
-                font-size: 13px;
-                color: white;
-                margin: 0 12px;
-            }
-            #extension-list {
-                display: none;
-            }
-            div.extensions,
-            .menus {
-                padding-top: 10px;
-            }
-            div.extension {
-                margin: 0 auto;
-                width: 500px;
-                padding: 5px 90px;
-                display: flex;
-                justify-content: space-between;
-            }
-            .collapse .el-collapse-item__header {
-                display: block;
-                text-align: center;
-                background-color: transparent;
-            }
-            .collapse .menuItem {
-                text-align: center;
-                cursor: pointer;
-                padding: 5px 0;
-            }
-            .collapse .menuItem:hover {
-                background-color: rgba(64, 158, 255, 0.15);
-            }
-            .menuBtn {
-                display: none;
-                position: fixed;
-                right: -12px;
-                top: 45%;
-                padding-left: 10px;
-            }
+      .header {
+        display: none;
+        padding: 20px 0;
+        background-color: #4e97fe;
+        color: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.35);
+      }
+      .header div.container {
+        width: 500px;
+        margin: 0 auto;
+      }
+      div.links {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+      }
+      div.link a {
+        font-size: 13px;
+        color: white;
+        margin: 0 12px;
+      }
+      #extension-list {
+        display: none;
+      }
+      div.extensions,
+      .menus {
+        padding-top: 10px;
+      }
+      div.extension {
+        margin: 0 auto;
+        width: 500px;
+        padding: 5px 90px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .collapse .el-collapse-item__header {
+        display: block;
+        text-align: center;
+        background-color: transparent;
+      }
+      .collapse .menuItem {
+        text-align: center;
+        cursor: pointer;
+        padding: 5px 0;
+      }
+      .collapse .menuItem:hover {
+        background-color: rgba(64, 158, 255, 0.15);
+      }
+      .menuBtn {
+        display: none;
+        position: fixed;
+        right: -12px;
+        top: 45%;
+        padding-left: 10px;
+      }
 
-            /*dialog input */
-            .el-dialog .el-input { width: 400px; }
-        </style>
-        <link rel="stylesheet" href="/static/css-3.0.css" />
-    </head>
-    <body>
-        <section id="app" v-cloak>
-            <el-menu default-active="1-1" :collapse-transition="false" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-            <el-menu-item class="logo">
-                <span v-if="!isCollapse">
-                    Adapter
-                </span>
-                <img v-else width="40px" height="40px" src="/static/yingli_adapter.png"/>
-            </el-menu-item>
-            <el-submenu index="1">
-                <template slot="title">
-                <img src="/static/icon-console-nor.png">
-                <span slot="title">{{language.controlPanel}}</span>
-                </template>
-                <el-menu-item index="1-1" @click="showTypeToggle=true">{{language.extensionStatus}}</el-menu-item>
-                <el-menu-item index="1-2" @click="showTypeToggle=false">{{language.nodeStatus}}</el-menu-item>
-            </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">
-                    <img src="/static/icon-plugins-nor.png">
-                    <span slot="title">{{language.plugin}}</span>
-                </template>
-                <el-menu-item class="menuItem" @click="dialogFormVisible = true">
-                    {{language.downloadPlugin}}
-                </el-menu-item>
-                <el-menu-item
-                    class="menuItem"
-                    @click="handleClick('extensions_open_dir')"
-                >
-                    {{language.openPluginDirectory}}
-                </el-menu-item>
-                <el-menu-item
-                    class="menuItem"
-                    @click="handleClick('extensions_update')"
-                >
-                    {{language.updateplugin}}
-                </el-menu-item>
-            </el-submenu>
-            <el-submenu index="3">
-                <template slot="title">
-                    <img src="/static/icon-record-nor.png">
-                    <span slot="title">{{language.log}}</span>
-                </template>
-                <el-menu-item
-                    class="menuItem"
-                    @click="handleClick('log_open')"
-                >
-                    {{language.openLogDirectory}}
-                </el-menu-item>
-            </el-submenu>
-            <el-submenu index="4">
-                <template slot="title">
-                    <img src="/static/icon-help-nor.png">
-                    <span slot="title">{{language.help}}</span>
-                </template>
-                <!-- <a
+      /*dialog input */
+      .el-dialog .el-input {
+        width: 400px;
+      }
+    </style>
+    <link rel="stylesheet" href="/static/css-3.0.css" />
+  </head>
+  <body>
+    <section id="app" v-cloak>
+      <el-menu
+        default-active="1-1"
+        :collapse-transition="false"
+        class="el-menu-vertical-demo"
+        @open="handleOpen"
+        @close="handleClose"
+        :collapse="isCollapse"
+      >
+        <el-menu-item class="logo">
+          <span v-if="!isCollapse"> Adapter </span>
+          <img
+            v-else
+            width="40px"
+            height="40px"
+            src="/static/yingli_adapter.png"
+          />
+        </el-menu-item>
+        <el-submenu index="1">
+          <template slot="title">
+            <img src="/static/icon-console-nor.png" />
+            <span slot="title">{{language.controlPanel}}</span>
+          </template>
+          <el-menu-item index="1-1" @click="showTypeToggle=true"
+            >{{language.extensionStatus}}</el-menu-item
+          >
+          <el-menu-item index="1-2" @click="showTypeToggle=false"
+            >{{language.nodeStatus}}</el-menu-item
+          >
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title">
+            <img src="/static/icon-plugins-nor.png" />
+            <span slot="title">{{language.plugin}}</span>
+          </template>
+          <el-menu-item class="menuItem" @click="dialogFormVisible = true">
+            {{language.downloadPlugin}}
+          </el-menu-item>
+          <el-menu-item
+            class="menuItem"
+            @click="handleClick('extensions_open_dir')"
+          >
+            {{language.openPluginDirectory}}
+          </el-menu-item>
+          <el-menu-item
+            class="menuItem"
+            @click="handleClick('extensions_update')"
+          >
+            {{language.updateplugin}}
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="3">
+          <template slot="title">
+            <img src="/static/icon-record-nor.png" />
+            <span slot="title">{{language.log}}</span>
+          </template>
+          <el-menu-item class="menuItem" @click="handleClick('log_open')">
+            {{language.openLogDirectory}}
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">
+            <img src="/static/icon-help-nor.png" />
+            <span slot="title">{{language.help}}</span>
+          </template>
+          <!-- <a
                     target="_blank"
                     href="https://adapter.codelab.club"
                 >
@@ -168,29 +186,26 @@ todo
                         {{language.discuss}}
                     </el-menu-item>
                 </a> -->
-                <!-- <a target="_blank" :href="'/webdebug?adapter_token='+token">
+          <!-- <a target="_blank" :href="'/webdebug?adapter_token='+token">
                     <el-menu-item class="menuItem">
                         {{language.debug}}
                     </el-menu-item>
                 </a> -->
-                <!-- <a target="_blank" :href="'/web_log_page?adapter_token='+token">
+          <!-- <a target="_blank" :href="'/web_log_page?adapter_token='+token">
                     <el-menu-item class="menuItem">
                     {{language.viewLog}}
                     </el-menu-item>
                 </a> -->
-                <el-menu-item
-                    class="menuItem"
-                    @click="handleClick('open_user_dir')"
-                >
-                    {{language.openUserDirectory}}
-                </el-menu-item>
-            </el-submenu>
-            <el-submenu index="5">
-                <template slot="title">
-                    <img src="/static/icon-environment-nor.png">
-                    <span slot="title">{{language.env}}</span>
-                </template>
-                <!-- <a
+          <el-menu-item class="menuItem" @click="handleClick('open_user_dir')">
+            {{language.openUserDirectory}}
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="5">
+          <template slot="title">
+            <img src="/static/icon-environment-nor.png" />
+            <span slot="title">{{language.env}}</span>
+          </template>
+          <!-- <a
                     target="_blank"
                     :href="'/env?adapter_token='+token"
                 >
@@ -199,10 +214,10 @@ todo
 
                     </el-menu-item>
                 </a> -->
-                <el-menu-item class="menuItem" @click="handleClick('refresh_env')">
-                        {{language.refresh}}
-                </el-menu-item>
-                <!-- <a
+          <el-menu-item class="menuItem" @click="handleClick('refresh_env')">
+            {{language.refresh}}
+          </el-menu-item>
+          <!-- <a
                     target="_blank"
                     :href="'/api/list_nodes_pid?adapter_token='+token"
                 >
@@ -210,8 +225,8 @@ todo
                     {{language.runningNode}}
                     </el-menu-item>
                 </a> -->
-            </el-submenu>
-            <!-- <el-submenu index="6">
+        </el-submenu>
+        <!-- <el-submenu index="6">
                 <template slot="title">
                     <img src="/static/icon-about-nor.png">
                     <span slot="title">{{language.about}}</span>
@@ -252,7 +267,7 @@ todo
                     </el-menu-item>
                 </a>
             </el-submenu> -->
-            <!-- <el-submenu index="7">
+        <!-- <el-submenu index="7">
                 <template slot="title">
                     <img src="/static/icon-about-nor.png">
                     <span slot="title">Linda</span>
@@ -274,76 +289,156 @@ todo
                     </el-menu-item>
                 </a>
             </el-submenu> -->
-            </el-menu>
-            <div class="panel">
-                <header class="new-header">
-                    <div class="left">
-                        <i class="el-icon-s-fold" @click="isCollapse = !isCollapse"></i>
-                        <span class="version">{{language.version}}：{{version}}</span>
-                        <el-dropdown @command="val => currentLanguage = val">
-                            <span class="languageSelecter">
-                                <!-- <img class="langugaeIcon" src="/static/language.svg"> -->
-                                <svg width="24px" height="24px" class="langugaeIcon" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
-                                    <title>Language</title>
-                                    <desc>Created with Sketch.</desc>
-                                    <defs></defs>
-                                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-                                        <g id="Language" stroke="#585858" stroke-width="1.25">
-                                            <g id="language" transform="translate(2.000000, 2.000000)">
-                                                <path d="M15.6352,8.11294118 C15.6352,12.2682353 12.2667294,15.6357647 8.11237647,15.6357647 C3.95708235,15.6357647 0.588611765,12.2682353 0.588611765,8.11294118 C0.588611765,3.95764706 3.95708235,0.589176471 8.11237647,0.589176471 C12.2667294,0.589176471 15.6352,3.95764706 15.6352,8.11294118 Z" id="Stroke-1"></path>
-                                                <path d="M11.9808,8.11661176 C11.9808,9.74955294 11.7153882,11.2601412 11.2542118,12.4921412 C10.5558588,14.3933176 9.40762353,15.6347294 8.11068235,15.6347294 C6.81374118,15.6347294 5.66927059,14.3933176 4.96715294,12.4921412 C4.51068235,11.2601412 4.24432941,9.74955294 4.24432941,8.11661176 C4.24432941,6.48272941 4.51068235,4.97308235 4.96715294,3.74108235 C5.66927059,1.82955294 6.81374118,0.588141176 8.11068235,0.588141176 C9.40762353,0.588141176 10.5558588,1.82955294 11.2542118,3.74108235 C11.7153882,4.97308235 11.9808,6.48272941 11.9808,8.11661176 Z" id="Stroke-3"></path>
-                                                <path d="M0.955011765,10.2811294 L15.2684235,10.2811294" id="Stroke-5"></path>
-                                                <path d="M0.955011765,5.94663529 L15.2684235,5.94663529" id="Stroke-7"></path>
-                                                <path d="M8.11218824,0.590023529 L8.11218824,15.6375529" id="Stroke-9"></path>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-                                <i class="el-icon-caret-bottom"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="zh-cn">简体中文</el-dropdown-item>
-                                <el-dropdown-item command="en">English</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </div>
-                    <div class="right">
-                        <div class="indicatorBar">
-                            <span :class="['indicator', {connect: status === 'connected!'}]"></span> <span>{{status === 'connected!' ? language.connected : (status === 'disconnected' ? language.connecting : language.disconnected )}}</span>
-                        </div>
-                        <el-button type="danger" :disabled="status !== 'connected!'" size="small" @click="exit_adapter_app">{{status === 'connected!' ? language.exit : language.exited}}</el-button>
-                        <el-button id="token" :data-clipboard-text="token" type="primary" size="small" @click="$message({message: '复制令牌成功，你可以将它粘贴到其他地方',type: 'success'})">{{language.copyToken}}</el-button>
-                        <a target="_blank" :href="'https://make.aimaker.space/projects/editor/?adapter_token='+token" class="el-button el-button--primary el-button--small">{{language.openScratch}}</a>
-                    </div>
-                </header>
-                <div class="container">
-                    <div class="playgroundList extensionList" v-if="showTypeToggle">
-                        <div class="titleBar">
-                            <div class="left">{{language.extsList}}</div>
-                            <div class="right">
-                                <el-button-group size="small">
-                                    <el-button size="small" :class="{active: extensinFilter === undefined}" @click="extensinFilter = undefined">{{language.all}}</el-button>
-                                    <el-button size="small" :class="{active: extensinFilter === true}" @click="extensinFilter = true">{{language.connected}}</el-button>
-                                    <el-button size="small" :class="{active: extensinFilter === false}" @click="extensinFilter = false">{{language.disconnected}}</el-button>
-                                </el-button-group>
-                                <el-input
-                                    v-model="extNameFilter"
-                                    style="width: 250px;"
-                                    size="small"
-                                    :placeholder="language.inputExtName"
-                                    suffix-icon="el-icon-search">
-                                </el-input>
-                            </div>
-                        </div>
-                        <div class="list">
-                            <div
-                                class="item"
-                                v-for="(statu_info, extension) in filtedExts"
-                            >
-                                <img class="extensionImg" :src="statu_info['ICON_URL'] || '/static/default-node.jpg'"/>
-                                <div class="content">
-                                    <!-- <el-tooltip
+      </el-menu>
+      <div class="panel">
+        <header class="new-header">
+          <div class="left">
+            <i class="el-icon-s-fold" @click="isCollapse = !isCollapse"></i>
+            <span class="version">{{language.version}}：{{version}}</span>
+            <el-dropdown @command="val => currentLanguage = val">
+              <span class="languageSelecter">
+                <!-- <img class="langugaeIcon" src="/static/language.svg"> -->
+                <svg
+                  width="24px"
+                  height="24px"
+                  class="langugaeIcon"
+                  viewBox="0 0 20 20"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+                  <title>Language</title>
+                  <desc>Created with Sketch.</desc>
+                  <defs></defs>
+                  <g
+                    id="Page-1"
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <g id="Language" stroke="#585858" stroke-width="1.25">
+                      <g
+                        id="language"
+                        transform="translate(2.000000, 2.000000)"
+                      >
+                        <path
+                          d="M15.6352,8.11294118 C15.6352,12.2682353 12.2667294,15.6357647 8.11237647,15.6357647 C3.95708235,15.6357647 0.588611765,12.2682353 0.588611765,8.11294118 C0.588611765,3.95764706 3.95708235,0.589176471 8.11237647,0.589176471 C12.2667294,0.589176471 15.6352,3.95764706 15.6352,8.11294118 Z"
+                          id="Stroke-1"
+                        ></path>
+                        <path
+                          d="M11.9808,8.11661176 C11.9808,9.74955294 11.7153882,11.2601412 11.2542118,12.4921412 C10.5558588,14.3933176 9.40762353,15.6347294 8.11068235,15.6347294 C6.81374118,15.6347294 5.66927059,14.3933176 4.96715294,12.4921412 C4.51068235,11.2601412 4.24432941,9.74955294 4.24432941,8.11661176 C4.24432941,6.48272941 4.51068235,4.97308235 4.96715294,3.74108235 C5.66927059,1.82955294 6.81374118,0.588141176 8.11068235,0.588141176 C9.40762353,0.588141176 10.5558588,1.82955294 11.2542118,3.74108235 C11.7153882,4.97308235 11.9808,6.48272941 11.9808,8.11661176 Z"
+                          id="Stroke-3"
+                        ></path>
+                        <path
+                          d="M0.955011765,10.2811294 L15.2684235,10.2811294"
+                          id="Stroke-5"
+                        ></path>
+                        <path
+                          d="M0.955011765,5.94663529 L15.2684235,5.94663529"
+                          id="Stroke-7"
+                        ></path>
+                        <path
+                          d="M8.11218824,0.590023529 L8.11218824,15.6375529"
+                          id="Stroke-9"
+                        ></path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <i class="el-icon-caret-bottom"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="zh-cn">简体中文</el-dropdown-item>
+                <el-dropdown-item command="en">English</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <div class="right">
+            <div class="indicatorBar">
+              <span
+                :class="['indicator', {connect: status === 'connected!'}]"
+              ></span>
+              <span
+                >{{status === 'connected!' ? language.connected : (status ===
+                'disconnected' ? language.connecting : language.disconnected
+                )}}</span
+              >
+            </div>
+            <el-button
+              type="danger"
+              :disabled="status !== 'connected!'"
+              size="small"
+              @click="exit_adapter_app"
+              >{{status === 'connected!' ? language.exit :
+              language.exited}}</el-button
+            >
+            <el-button
+              id="token"
+              :data-clipboard-text="token"
+              type="primary"
+              size="small"
+              @click="$message({message: '复制令牌成功，你可以将它粘贴到其他地方',type: 'success'})"
+              >{{language.copyToken}}</el-button
+            >
+            <a
+              target="_blank"
+              :href="'https://make.aimaker.space/projects/editor/?adapter_token='+token"
+              class="el-button el-button--primary el-button--small"
+              >{{language.openScratch}}</a
+            >
+          </div>
+        </header>
+        <div class="el-msg">
+          Adapter 控制中心主要面向开发者，教学过程中 Adapter
+          可以在后台运行，不需要打开此页面
+        </div>
+        <div class="container">
+          <div class="playgroundList extensionList" v-if="showTypeToggle">
+            <div class="titleBar">
+              <div class="left">{{language.extsList}}</div>
+              <div class="right">
+                <el-button-group size="small">
+                  <el-button
+                    size="small"
+                    :class="{active: extensinFilter === undefined}"
+                    @click="extensinFilter = undefined"
+                    >{{language.all}}</el-button
+                  >
+                  <el-button
+                    size="small"
+                    :class="{active: extensinFilter === true}"
+                    @click="extensinFilter = true"
+                    >{{language.connected}}</el-button
+                  >
+                  <el-button
+                    size="small"
+                    :class="{active: extensinFilter === false}"
+                    @click="extensinFilter = false"
+                    >{{language.disconnected}}</el-button
+                  >
+                </el-button-group>
+                <el-input
+                  v-model="extNameFilter"
+                  style="width: 250px"
+                  size="small"
+                  :placeholder="language.inputExtName"
+                  suffix-icon="el-icon-search"
+                >
+                </el-input>
+              </div>
+            </div>
+            <div class="list">
+              <div class="item" v-for="(statu_info, extension) in filtedExts">
+                <img
+                  class="extensionImg"
+                  :src="statu_info['ICON_URL'] || '/static/default-node.jpg'"
+                />
+                <div class="content">
+                  <!-- <el-tooltip
                                         effect="dark"
                                         content="click for help"
                                         placement="left"
@@ -355,76 +450,93 @@ todo
                                             >{{ extension }}
                                         </el-link>
                                     </el-tooltip> -->
-                                    <el-link
-                                        class="title"
-                                        :href="statu_info['HELP_URL']"
-                                        target="_blank"
-                                        >{{ statu_info['NODE_TITLE'] }}
-                                    </el-link>
-                                    <p class="desc">{{ statu_info['DESCRIPTION'] }}</p>
-                                </div>
-                                <!--click for help-->
-                                <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
+                  <el-link
+                    class="title"
+                    :href="statu_info['HELP_URL']"
+                    target="_blank"
+                    >{{ statu_info['NODE_TITLE'] }}
+                  </el-link>
+                  <p class="desc">{{ statu_info['DESCRIPTION'] }}</p>
+                </div>
+                <!--click for help-->
+                <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
 
-                                <!--el-icon-close-->
-                                <!--bug id-->
-                                <div class="switch">
-                                    <i
-                                        v-if="exts_statu[extension]['is_running']"
-                                        class="el-icon-connection"
-                                        style="color: green;"
-                                    ></i>
-                                    <el-switch
-                                        :class="{is_running: exts_statu[extension]['is_running']}"
-                                        :id="extension"
-                                        @change="check($event, extension,'extension')"
-                                        v-model="exts_statu[extension]['is_running']"
-                                    >
-                                    </el-switch>
-                                </div>
-                            </div>
-                            <i class="itemFix"></i>
-                        </div>
-                        <div class="bottomBar">
-                            <!-- <div><a target="_blank" href="https://adapter.codelab.club/extension_guide/extension_market/">没有找到想要的插件？</a></div> -->
-                            <div><a></a></div>
-                            <el-pagination
-                                @size-change="val => extPageSize = val"
-                                :page-sizes="[6, 10, 20]"
-                                @current-change="(val) => extCurrentPage = val"
-                                :current-page="extCurrentPage"
-                                :page-size="10"
-                                layout="total, sizes, prev, pager, next, jumper"
-                                :total="filtedExtsLenght">
-                            </el-pagination>
-                        </div>
-                    </div>
-                    <div class="playgroundList extensionList" v-else="!showTypeToggle">
-                        <div class="titleBar">
-                            <div class="left">{{language.nodeList}}</div>
-                            <div class="right">
-                                <el-button-group size="small">
-                                    <el-button size="small" :class="{active: nodeFilter === undefined}" @click="nodeFilter = undefined">{{language.all}}</el-button>
-                                    <el-button size="small" :class="{active: nodeFilter === true}" @click="nodeFilter = true">{{language.connected}}</el-button>
-                                    <el-button size="small" :class="{active: nodeFilter === false}" @click="nodeFilter = false">{{language.disconnected}}</el-button>
-                                </el-button-group>
-                                <el-input
-                                    v-model="nodeNameFilter"
-                                    style="width: 250px;"
-                                    size="small"
-                                    :placeholder="language.inputNodeName"
-                                    suffix-icon="el-icon-search">
-                                </el-input>
-                            </div>
-                        </div>
-                        <div class="list">
-                              <div
-                                class="item"
-                                v-for="(statu_info, node) in filtedNodes"
-                            >
-                                <img class="extensionImg" :src="statu_info['ICON_URL'] || '/static/default-node.jpg'"/>
-                                <div class="content">
-                                    <!-- <el-tooltip
+                <!--el-icon-close-->
+                <!--bug id-->
+                <div class="switch">
+                  <i
+                    v-if="exts_statu[extension]['is_running']"
+                    class="el-icon-connection"
+                    style="color: green"
+                  ></i>
+                  <el-switch
+                    :class="{is_running: exts_statu[extension]['is_running']}"
+                    :id="extension"
+                    @change="check($event, extension,'extension')"
+                    v-model="exts_statu[extension]['is_running']"
+                  >
+                  </el-switch>
+                </div>
+              </div>
+              <i class="itemFix"></i>
+            </div>
+            <div class="bottomBar">
+              <!-- <div><a target="_blank" href="https://adapter.codelab.club/extension_guide/extension_market/">没有找到想要的插件？</a></div> -->
+              <div><a></a></div>
+              <el-pagination
+                @size-change="val => extPageSize = val"
+                :page-sizes="[6, 10, 20]"
+                @current-change="(val) => extCurrentPage = val"
+                :current-page="extCurrentPage"
+                :page-size="10"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="filtedExtsLenght"
+              >
+              </el-pagination>
+            </div>
+          </div>
+          <div class="playgroundList extensionList" v-else="!showTypeToggle">
+            <div class="titleBar">
+              <div class="left">{{language.nodeList}}</div>
+              <div class="right">
+                <el-button-group size="small">
+                  <el-button
+                    size="small"
+                    :class="{active: nodeFilter === undefined}"
+                    @click="nodeFilter = undefined"
+                    >{{language.all}}</el-button
+                  >
+                  <el-button
+                    size="small"
+                    :class="{active: nodeFilter === true}"
+                    @click="nodeFilter = true"
+                    >{{language.connected}}</el-button
+                  >
+                  <el-button
+                    size="small"
+                    :class="{active: nodeFilter === false}"
+                    @click="nodeFilter = false"
+                    >{{language.disconnected}}</el-button
+                  >
+                </el-button-group>
+                <el-input
+                  v-model="nodeNameFilter"
+                  style="width: 250px"
+                  size="small"
+                  :placeholder="language.inputNodeName"
+                  suffix-icon="el-icon-search"
+                >
+                </el-input>
+              </div>
+            </div>
+            <div class="list">
+              <div class="item" v-for="(statu_info, node) in filtedNodes">
+                <img
+                  class="extensionImg"
+                  :src="statu_info['ICON_URL'] || '/static/default-node.jpg'"
+                />
+                <div class="content">
+                  <!-- <el-tooltip
                                         effect="dark"
                                         content="click for help"
                                         placement="left"
@@ -436,286 +548,251 @@ todo
                                             >{{ node }}
                                         </el-link>
                                     </el-tooltip> -->
-                                    <el-link
-                                        class="title"
-                                        :href="statu_info['HELP_URL']"
-                                        target="_blank"
-                                        >{{ statu_info['NODE_TITLE'] }}
-                                    </el-link>
-                                    <p class="desc">{{ statu_info['DESCRIPTION'] }}</p>
-                                </div>
-                                <!--click for help-->
-                                <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
-
-                                <!--el-icon-close-->
-                                <!--bug id-->
-                                <div class="switch">
-                                    <i
-                                        v-if="nodes_statu[node]['is_running']"
-                                        class="el-icon-connection"
-                                        style="color: green;"
-                                    ></i>
-                                    <el-switch
-                                        :class="{is_running: nodes_statu[node]['is_running']}"
-                                        :id="node"
-                                        @change="check($event, node,'node')"
-                                        v-model="nodes_statu[node]['is_running']"
-                                    >
-                                    </el-switch>
-                                </div>
-                            </div>
-                            <i class="itemFix"></i>
-                        </div>
-                        <div class="bottomBar">
-                            <!-- <div><a target="_blank" href="https://adapter.codelab.club/extension_guide/extension_market/">没有找到想要的节点？</a></div> -->
-                            <div><a></a></div>
-                            <el-pagination
-                                @size-change="val => nodePageSize = val"
-                                :page-sizes="[6, 10, 20]"
-                                @current-change="(val) => nodeCurrentPage = val"
-                                :current-page="nodeCurrentPage"
-                                :page-size="10"
-                                layout="total, sizes, prev, pager, next, jumper"
-                                :total="filtedNodesLength">
-                            </el-pagination>
-                        </div>
-                    </div>
+                  <el-link
+                    class="title"
+                    :href="statu_info['HELP_URL']"
+                    target="_blank"
+                    >{{ statu_info['NODE_TITLE'] }}
+                  </el-link>
+                  <p class="desc">{{ statu_info['DESCRIPTION'] }}</p>
                 </div>
-                <header class="header">
-                    <div class="container">
-                        <h2>CodeLab Adapter v3 Web UI</h2>
-                        <p>status: {{ status }}</p>
-                        <p>version: {{ version }}</p>
-                        <el-button round v-on:click="exit_adapter_app"
-                            >exit</el-button
-                        >
-                        <div class="links">
-                            <span class="link" v-for="(url, link_name) in links">
-                                <a target="_blank" :href="url">{{ link_name }}</a>
-                            </span>
-                        </div>
-                        <span class="links">
-                            <a href="#" :data-clipboard-text="token">
-                                Copy token
-                            </a>
-                        </span>
-                    </div>
-                </header>
-                <div id="extension-list">
-                    <div class="extensions">
-                    <el-tabs v-model="activeName" @tab-click="handleClick">
-                        <el-tab-pane  label="extensions" name="first">
+                <!--click for help-->
+                <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
 
-                        <div
-                            class="extension"
-                            v-for="(statu_info, extension) in exts_statu"
-                        >
-                            <label for="extension">
-                                <el-tooltip
-                                    class="item"
-                                    effect="dark"
-                                    content="click for help"
-                                    placement="left"
-                                >
-                                    <el-link
-                                        :href="statu_info['HELP_URL']"
-                                        target="_blank"
-                                        >{{ statu_info['NODE_TITLE'] }}
-                                    </el-link>
-                                </el-tooltip>
-                            </label>
-                            <!--click for help-->
-                            <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
-                            <i
-                                v-if="exts_statu[extension]['is_running']"
-                                class="el-icon-connection"
-                                style="color: green;"
-                            ></i>
-                            <!--el-icon-close-->
-                            <!--bug id-->
-                            <el-switch
-                                :id="extension"
-                                @change="check($event, extension,'extension')"
-                                v-model="exts_statu[extension]['is_running']"
-                            >
-                            </el-switch>
-                        </div>
-                    </el-tab-pane>
-                    <el-tab-pane label="nodes" name="second">
-                        <div
-                            class="extension"
-                            v-for="(statu_info, node) in nodes_statu"
-                        >
-                            <label for="extension">
-                                <el-tooltip
-                                    class="item"
-                                    effect="dark"
-                                    content="click for help"
-                                    placement="left"
-                                >
-                                    <el-link
-                                        :href="statu_info['HELP_URL']"
-                                        target="_blank"
-                                        >{{ statu_info['NODE_TITLE'] }}
-                                    </el-link>
-                                </el-tooltip>
-                            </label>
-                            <!--click for help-->
-                            <i
-                                v-if="nodes_statu[node]['is_running']"
-                                class="el-icon-connection"
-                                style="color: green;"
-                            ></i>
-                            <!--el-icon-close-->
-                            <!--bug id-->
-                            <el-switch
-                                :id="node"
-                                @change="check($event, node,'node')"
-                                v-model="nodes_statu[node]['is_running']"
-                            >
-                            </el-switch>
-                        </div>
-                    </el-tab-pane>
-                    </el-tabs>
-                    </div>
-                    <ul id="logs">
-                        <li v-for="log in logs.slice().reverse()" class="log">
-                            {{ log.event }}: {{ log.data }}
-                        </li>
-                    </ul>
+                <!--el-icon-close-->
+                <!--bug id-->
+                <div class="switch">
+                  <i
+                    v-if="nodes_statu[node]['is_running']"
+                    class="el-icon-connection"
+                    style="color: green"
+                  ></i>
+                  <el-switch
+                    :class="{is_running: nodes_statu[node]['is_running']}"
+                    :id="node"
+                    @change="check($event, node,'node')"
+                    v-model="nodes_statu[node]['is_running']"
+                  >
+                  </el-switch>
                 </div>
+              </div>
+              <i class="itemFix"></i>
             </div>
-            <el-button class="menuBtn" v-on:click="showMenu = !showMenu"
-                >{{ "<<" }} helper</el-button
-            >
-            <el-drawer :modal="false" :visible.sync="showMenu" direction="rtl">
-                <el-collapse class="collapse" accordion>
-                    <el-collapse-item title="帮助(help)" name="4">
-                        <div class="menuItem" @click="handleClick('42')">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club"
-                                >文档(Documentation)</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            <a target="_blank" :href="'/webdebug?adapter_token='+token">调试(debug)</a>
-                        </div>
-                        <div class="menuItem">
-                            <a target="_blank" :href="'/web_log_page?adapter_token='+token"
-                                >查看日志(view log)</a
-                            >
-                        </div>
-                        <div
-                            class="menuItem"
-                            @click="handleClick('open_user_dir')"
-                        >
-                            打开用户目录(Open user directory)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="扩展(Plugin)" name="1">
-                        <div
-                            class="menuItem"
-                            @click="handleClick('extensions_update')"
-                        >
-                            更新扩展(Update plugin)
-                        </div>
-                        <div
-                            class="menuItem"
-                            @click="handleClick('extensions_open_dir')"
-                        >
-                            打开扩展目录(Open plugin directory)
-                        </div>
-                        <div class="menuItem" @click="dialogFormVisible = true">
-                            下载 Plugin(Download Plugin)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="日志(log)" name="2">
-                        <div class="menuItem" @click="handleClick('log_open')">
-                            打开日志目录(Open log directory)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="关于(about)" name="3">
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club"
-                                >About CodeLab Adapter</a
-                            >
-                        </div>
-
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/about/License/"
-                                >License</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/about/why/"
-                                >Why</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            Fun
-                        </div>
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/changelog/"
-                                >Changelog
-                            </a>
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="环境(env)" name="5">
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                :href="'/env?adapter_token='+token"
-                                >查看(view)</a
-                            >
-                        </div>
-                        <div class="menuItem" @click="handleClick('refresh_env')">
-                                刷新(refresh)
-                        </div>
-                    </el-collapse-item>
-                </el-collapse>
-            </el-drawer>
-
-            <el-dialog
-                title="plugin download"
-                :visible.sync="dialogFormVisible"
-            >   <!--label-width 无效-->
-                <el-form :model="form">
-                    <el-form-item>
-                        <el-autocomplete
-                        class="inline-input"
-                        v-model="form.plugin_url"
-                        blur="blur"
-                        :fetch-suggestions="querySearch"
-                        placeholder="input plugin name"
-                        @select="handleSelect"
-                        ></el-autocomplete>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false"
-                        >Cancel</el-button
+            <div class="bottomBar">
+              <!-- <div><a target="_blank" href="https://adapter.codelab.club/extension_guide/extension_market/">没有找到想要的节点？</a></div> -->
+              <div><a></a></div>
+              <el-pagination
+                @size-change="val => nodePageSize = val"
+                :page-sizes="[6, 10, 20]"
+                @current-change="(val) => nodeCurrentPage = val"
+                :current-page="nodeCurrentPage"
+                :page-size="10"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="filtedNodesLength"
+              >
+              </el-pagination>
+            </div>
+          </div>
+        </div>
+        <header class="header">
+          <div class="container">
+            <h2>CodeLab Adapter v3 Web UI</h2>
+            <p>status: {{ status }}</p>
+            <p>version: {{ version }}</p>
+            <el-button round v-on:click="exit_adapter_app">exit</el-button>
+            <div class="links">
+              <span class="link" v-for="(url, link_name) in links">
+                <a target="_blank" :href="url">{{ link_name }}</a>
+              </span>
+            </div>
+            <span class="links">
+              <a href="#" :data-clipboard-text="token"> Copy token </a>
+            </span>
+          </div>
+        </header>
+        <div id="extension-list">
+          <div class="extensions">
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="extensions" name="first">
+                <div
+                  class="extension"
+                  v-for="(statu_info, extension) in exts_statu"
+                >
+                  <label for="extension">
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="click for help"
+                      placement="left"
                     >
-                    <el-button type="primary" @click="plugin_download"
-                        >Confirm</el-button
-                    >
+                      <el-link :href="statu_info['HELP_URL']" target="_blank"
+                        >{{ statu_info['NODE_TITLE'] }}
+                      </el-link>
+                    </el-tooltip>
+                  </label>
+                  <!--click for help-->
+                  <!--todo 根据设备连接确认信息(通知)， exts_statu[extension]用于指示插件是否正在运行-->
+                  <i
+                    v-if="exts_statu[extension]['is_running']"
+                    class="el-icon-connection"
+                    style="color: green"
+                  ></i>
+                  <!--el-icon-close-->
+                  <!--bug id-->
+                  <el-switch
+                    :id="extension"
+                    @change="check($event, extension,'extension')"
+                    v-model="exts_statu[extension]['is_running']"
+                  >
+                  </el-switch>
                 </div>
-            </el-dialog>
+              </el-tab-pane>
+              <el-tab-pane label="nodes" name="second">
+                <div
+                  class="extension"
+                  v-for="(statu_info, node) in nodes_statu"
+                >
+                  <label for="extension">
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="click for help"
+                      placement="left"
+                    >
+                      <el-link :href="statu_info['HELP_URL']" target="_blank"
+                        >{{ statu_info['NODE_TITLE'] }}
+                      </el-link>
+                    </el-tooltip>
+                  </label>
+                  <!--click for help-->
+                  <i
+                    v-if="nodes_statu[node]['is_running']"
+                    class="el-icon-connection"
+                    style="color: green"
+                  ></i>
+                  <!--el-icon-close-->
+                  <!--bug id-->
+                  <el-switch
+                    :id="node"
+                    @change="check($event, node,'node')"
+                    v-model="nodes_statu[node]['is_running']"
+                  >
+                  </el-switch>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <ul id="logs">
+            <li v-for="log in logs.slice().reverse()" class="log">
+              {{ log.event }}: {{ log.data }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <el-button class="menuBtn" v-on:click="showMenu = !showMenu"
+        >{{ "<<" }} helper</el-button
+      >
+      <el-drawer :modal="false" :visible.sync="showMenu" direction="rtl">
+        <el-collapse class="collapse" accordion>
+          <el-collapse-item title="帮助(help)" name="4">
+            <div class="menuItem" @click="handleClick('42')">
+              <a target="_blank" href="https://adapter.codelab.club"
+                >文档(Documentation)</a
+              >
+            </div>
+            <div class="menuItem">
+              <a target="_blank" :href="'/webdebug?adapter_token='+token"
+                >调试(debug)</a
+              >
+            </div>
+            <div class="menuItem">
+              <a target="_blank" :href="'/web_log_page?adapter_token='+token"
+                >查看日志(view log)</a
+              >
+            </div>
+            <div class="menuItem" @click="handleClick('open_user_dir')">
+              打开用户目录(Open user directory)
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="扩展(Plugin)" name="1">
+            <div class="menuItem" @click="handleClick('extensions_update')">
+              更新扩展(Update plugin)
+            </div>
+            <div class="menuItem" @click="handleClick('extensions_open_dir')">
+              打开扩展目录(Open plugin directory)
+            </div>
+            <div class="menuItem" @click="dialogFormVisible = true">
+              下载 Plugin(Download Plugin)
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="日志(log)" name="2">
+            <div class="menuItem" @click="handleClick('log_open')">
+              打开日志目录(Open log directory)
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="关于(about)" name="3">
+            <div class="menuItem">
+              <a target="_blank" href="https://adapter.codelab.club"
+                >About CodeLab Adapter</a
+              >
+            </div>
 
-            <div class="el-msg">Adapter 控制中心主要面向开发者，教学过程中 Adapter 可以在后台运行，不需要打开此页面</el-msg>
-        </section>
-        <!--for update-->
-        <script src="/static/l10n.js"></script>
-        <script src="/static/rateLimiter.js?version=4.5.0"></script>
-        <script src="/static/codelab_adapter_base.js?version=4.5.0"></script>
-        <script src="/static/codelab_adapter_client.js?version=4.5.0"></script>
-    </body>
+            <div class="menuItem">
+              <a
+                target="_blank"
+                href="https://adapter.codelab.club/about/License/"
+                >License</a
+              >
+            </div>
+            <div class="menuItem">
+              <a target="_blank" href="https://adapter.codelab.club/about/why/"
+                >Why</a
+              >
+            </div>
+            <div class="menuItem">Fun</div>
+            <div class="menuItem">
+              <a target="_blank" href="https://adapter.codelab.club/changelog/"
+                >Changelog
+              </a>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="环境(env)" name="5">
+            <div class="menuItem">
+              <a target="_blank" :href="'/env?adapter_token='+token"
+                >查看(view)</a
+              >
+            </div>
+            <div class="menuItem" @click="handleClick('refresh_env')">
+              刷新(refresh)
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+      </el-drawer>
+
+      <el-dialog title="plugin download" :visible.sync="dialogFormVisible">
+        <!--label-width 无效-->
+        <el-form :model="form">
+          <el-form-item>
+            <el-autocomplete
+              class="inline-input"
+              v-model="form.plugin_url"
+              blur="blur"
+              :fetch-suggestions="querySearch"
+              placeholder="input plugin name"
+              @select="handleSelect"
+            ></el-autocomplete>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="plugin_download">Confirm</el-button>
+        </div>
+      </el-dialog>
+    </section>
+    <!--for update-->
+    <script src="/static/l10n.js"></script>
+    <script src="/static/rateLimiter.js?version=4.5.0"></script>
+    <script src="/static/codelab_adapter_base.js?version=4.5.0"></script>
+    <script src="/static/codelab_adapter_client.js?version=4.5.0"></script>
+  </body>
 </html>

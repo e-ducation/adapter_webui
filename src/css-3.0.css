@@ -1,299 +1,315 @@
 :root {
-    --header-height: 64px;
+  --header-height: 64px;
 }
 [v-cloak] {
-    display: none!important;
+  display: none !important;
 }
 .el-pagination {
-    text-align: right;
+  text-align: right;
 }
 .el-pager li.active {
-    color: #376fb3;
+  color: #376fb3;
 }
 .el-pager li:hover {
-    color: #376fb3;
+  color: #376fb3;
 }
 .indicatorBar {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 .indicator {
-    margin-left: 8px;
-    width: 10px;
-    height: 10px;
-    margin-right: 5px;
-    display: inline-block;
-    border-radius: 50%;
-    background-color: red;
+  margin-left: 8px;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: red;
 }
 .el-switch.is-checked .el-switch__core {
-    border-color: #376fb3;
-    background-color: #376fb3;
+  border-color: #376fb3;
+  background-color: #376fb3;
 }
 .indicator.connect {
-    background-color: #52c41a;
+  background-color: #52c41a;
 }
 .el-menu a {
-    text-decoration: none;
-    color: unset;
+  text-decoration: none;
+  color: unset;
 }
 .el-menu-item {
-    padding-left: 52px!important;
+  padding-left: 52px !important;
 }
 .el-menu {
-    border-right: solid 1px #e6e6e6!important;
+  border-right: solid 1px #e6e6e6 !important;
 }
-.el-menu-item.is-active, .el-menu-item:hover {
-    color: #376fb3;
-    background-color: #e6f7ff;
+.el-menu-item.is-active,
+.el-menu-item:hover {
+  color: #376fb3;
+  background-color: #e6f7ff;
 }
-.el-dropdown-menu__item:not(.is-disabled):hover{
-    color: #376fb3;
-    background-color: #e6f7ff;
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  color: #376fb3;
+  background-color: #e6f7ff;
 }
 .el-button--primary {
-    border: 1px solid #376fb3;
-    background-color: #376fb3;
-    color: white;
+  border: 1px solid #376fb3;
+  background-color: #376fb3;
+  color: white;
 }
 .el-button--primary:hover {
-    border: 1px solid #376fb3;
-    background-color: #5080bb;
-    color: white;
+  border: 1px solid #376fb3;
+  background-color: #5080bb;
+  color: white;
 }
 .el-msg {
-    position: fixed;
-    left: 10px;
-    bottom: 10px;
-    width: 202px;
-    font-size: 10px;
-    color: #898b8f;
+  margin: 20px 24px 0;
+  color: #898b8f;
+  padding: 8px 15px;
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  font-size: 14px;
 }
 body {
-    background-color: #f7f9fc;
+  background-color: #f7f9fc;
 }
 .el-menu-vertical-demo .logo {
-    cursor: default;
-    font-size: 30px;
-    color: #3669a6;
-    border-bottom: solid 1px #e6e6e6;
-    font-weight: 600;
-    text-align: center!important;
-    padding: 0 20px!important;
-    height: 64px;
-    line-height: 64px;
+  cursor: default;
+  font-size: 30px;
+  color: #3669a6;
+  border-bottom: solid 1px #e6e6e6;
+  font-weight: 600;
+  text-align: center !important;
+  padding: 0 20px !important;
+  height: 64px;
+  line-height: 64px;
 }
 .el-submenu__title img {
-    width: 16px;
-    height: 16px;
-    margin-left: 3px;
-    margin-right:7px;
+  width: 16px;
+  height: 16px;
+  margin-left: 3px;
+  margin-right: 7px;
 }
 .el-menu-vertical-demo .logo img {
-    position: relative;
-    left: -9px;
-    top: -4px;
+  position: relative;
+  left: -9px;
+  top: -4px;
 }
 
-.el-menu-vertical-demo .logo:hover, .el-menu-vertical-demo .logo:focus {
-    color: unset;
-    color: #3669a6;
-    background-color: unset;
+.el-menu-vertical-demo .logo:hover,
+.el-menu-vertical-demo .logo:focus {
+  color: unset;
+  color: #3669a6;
+  background-color: unset;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 250px;
+  width: 250px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) .el-submenu {
-    width: 250px;
-    text-align: left;
+  width: 250px;
+  text-align: left;
 }
 .el-menu-vertical-demo {
-    user-select: none;
-    height: 100vh;
-    overflow: auto;
-    position: sticky;
-    flex-shrink: 0;
-    top: 0;
+  user-select: none;
+  height: 100vh;
+  overflow: auto;
+  position: sticky;
+  flex-shrink: 0;
+  top: 0;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) .el-menu-item {
-    text-align: left;
+  text-align: left;
 }
 section#app {
-    display: flex;
-    text-align: center;
-    min-width: 500px;
+  display: flex;
+  text-align: center;
+  min-width: 500px;
 }
 section#app div.panel {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 section#app div.panel .new-header {
-    z-index: 999;
-    background-color: white;
-    position: sticky;
-    top: 0;
-    display: flex;
-    height: var(--header-height);
-    justify-content: space-between;
+  z-index: 999;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: var(--header-height);
+  justify-content: space-between;
 }
 section#app div.panel .new-header .left {
-    color: rgba(0, 0, 0, 0.65);
-    padding-left: 26px;
+  color: rgba(0, 0, 0, 0.65);
+  padding-left: 26px;
 }
 
 section#app div.panel .new-header .left .el-dropdown {
-    cursor: pointer;
-    vertical-align: sub;
+  cursor: pointer;
+  vertical-align: sub;
 }
 section#app div.panel .new-header .left .el-dropdown i {
-    vertical-align: super;
-    position: relative;
-    top: 1px;
-    color: rgba(0, 0, 0, 0.65);
+  vertical-align: super;
+  position: relative;
+  top: 1px;
+  color: rgba(0, 0, 0, 0.65);
 }
 section#app div.panel .new-header .left .languageSelecter:hover {
-    color: #376fb3;
+  color: #376fb3;
 }
 section#app div.panel .new-header .left .languageSelecter:hover g#Language {
-    stroke: #376fb3;
+  stroke: #376fb3;
 }
 section#app div.panel .new-header .left .langugaeIcon {
-    cursor: pointer;
-    margin-left: 5px;
+  cursor: pointer;
+  margin-left: 5px;
 }
 section#app div.panel .new-header .left i {
-    color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.65);
 }
 section#app div.panel .new-header .left .languageSelecter:hover i {
-    color: #376fb3;
+  color: #376fb3;
 }
 section#app div.panel .new-header .left .el-icon-s-fold {
-    font-size: 22px;
-    cursor: pointer;
-    line-height: var(--header-height);
+  font-size: 22px;
+  cursor: pointer;
+  line-height: var(--header-height);
 }
 section#app div.panel .new-header .left .version {
-    padding-left: 30px;
-    font-size: 14px;
-    line-height: var(--header-height);
-    vertical-align: bottom;
+  padding-left: 30px;
+  font-size: 14px;
+  line-height: var(--header-height);
+  vertical-align: bottom;
 }
 section#app div.panel .new-header .right {
-    display: flex;
-    color: rgba(0, 0, 0, 0.65);
-    font-size: 14px;
-    align-items: center;
-    padding-right: 24px;
+  display: flex;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  align-items: center;
+  padding-right: 24px;
 }
-section#app div.panel >.container {
-    padding: 26px 24px;
-    display: flex;
-    flex-direction: column;
+section#app div.panel > .container {
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
 }
-section#app div.panel >.container .playgroundList {
-    background-color: white;
+section#app div.panel > .container .playgroundList {
+  background-color: white;
 }
-section#app div.panel >.container .playgroundList button:hover {
-    border: 1px solid #376fb3;
-    color: #376fb3;
-    background-color: white;
+section#app div.panel > .container .playgroundList button:hover {
+  border: 1px solid #376fb3;
+  color: #376fb3;
+  background-color: white;
 }
-section#app div.panel >.container .playgroundList button:focus {
-    border: 1px solid #376fb3;
-    color: #376fb3;
-    background-color: white;
+section#app div.panel > .container .playgroundList button:focus {
+  border: 1px solid #376fb3;
+  color: #376fb3;
+  background-color: white;
 }
-section#app div.panel >.container .playgroundList button.active {
-    border: 1px solid #376fb3;
-    color: #376fb3;
-    z-index: 1;
+section#app div.panel > .container .playgroundList button.active {
+  border: 1px solid #376fb3;
+  color: #376fb3;
+  z-index: 1;
 }
-section#app div.panel >.container .playgroundList .titleBar {
-    display: flex;
-    justify-content: space-between;
-    line-height: 55px;
-    padding: 0 32px;
-    border-bottom: 1px solid #e8e8e8;;
+section#app div.panel > .container .playgroundList .titleBar {
+  display: flex;
+  justify-content: space-between;
+  line-height: 55px;
+  padding: 0 32px;
+  border-bottom: 1px solid #e8e8e8;
 }
-section#app div.panel >.container .playgroundList .titleBar .left {
-    font-weight: 600;
+section#app div.panel > .container .playgroundList .titleBar .left {
+  font-weight: 600;
 }
-section#app div.panel >.container .playgroundList .titleBar .right .el-input{
-    margin-left: 35px;
+section#app div.panel > .container .playgroundList .titleBar .right .el-input {
+  margin-left: 35px;
 }
-section#app div.panel >.container .playgroundList .list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 34px 0 16px;
+section#app div.panel > .container .playgroundList .list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 34px 0 16px;
 }
-section#app div.panel >.container .playgroundList .list .itemFix {
-    width: 45%;
+section#app div.panel > .container .playgroundList .list .itemFix {
+  width: 45%;
 }
-section#app div.panel >.container .playgroundList .list .item {
-    padding: 24px 22px;
-    border: 1px solid #e8e8e8;
-    border-radius: 4px;
-    width: 45%;
-    margin-bottom: 18px;
-    display: flex;
+section#app div.panel > .container .playgroundList .list .item {
+  padding: 24px 22px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  width: 45%;
+  margin-bottom: 18px;
+  display: flex;
 }
-section#app div.panel >.container .playgroundList .list .item .extensionImg {
-    width: 120px;
-    height: 80px;
-    flex-shrink: 0;
-    border-radius: 4px;
+section#app div.panel > .container .playgroundList .list .item .extensionImg {
+  width: 120px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 4px;
 }
-section#app div.panel >.container .playgroundList .list .item .content {
-    text-align: left;
-    padding-left: 15px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 15px;
+section#app div.panel > .container .playgroundList .list .item .content {
+  text-align: left;
+  padding-left: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
 }
-section#app div.panel >.container .playgroundList .list .item .content .title {
-    color: rgba(0, 0, 0, 0.65);
-    display: inline-block;
+section#app div.panel > .container .playgroundList .list .item .content .title {
+  color: rgba(0, 0, 0, 0.65);
+  display: inline-block;
 }
-section#app div.panel >.container .playgroundList .list .item .content p.desc {
-    color: #999999;
-    margin-bottom: 0;
+section#app div.panel > .container .playgroundList .list .item .content p.desc {
+  color: #999999;
+  margin-bottom: 0;
 }
-section#app div.panel >.container .playgroundList.extensionList {
-    margin-top: 27px;
-    padding-bottom: 32px;
+section#app div.panel > .container .playgroundList.extensionList {
+  margin-top: 27px;
+  padding-bottom: 32px;
 }
-section#app div.panel >.container .playgroundList .list .item .switch {
-    display: flex;
-    align-items: center;
+section#app div.panel > .container .playgroundList .list .item .switch {
+  display: flex;
+  align-items: center;
 }
-section#app div.panel >.container .playgroundList .list .item .switch .el-switch {
-    margin-left: 37px;
+section#app
+  div.panel
+  > .container
+  .playgroundList
+  .list
+  .item
+  .switch
+  .el-switch {
+  margin-left: 37px;
 }
-section#app div.panel >.container .playgroundList .list .item .switch .is_running {
-    margin-left: 0;
+section#app
+  div.panel
+  > .container
+  .playgroundList
+  .list
+  .item
+  .switch
+  .is_running {
+  margin-left: 0;
 }
-section#app div.panel >.container .playgroundList .list .item .switch i {
-    width: 22px;
-    margin-left: 7px;
-    margin-right: 8px;
+section#app div.panel > .container .playgroundList .list .item .switch i {
+  width: 22px;
+  margin-left: 7px;
+  margin-right: 8px;
 }
 
-section#app div.panel >.container .playgroundList .bottomBar {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 2.5%;
+section#app div.panel > .container .playgroundList .bottomBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2.5%;
 }
-section#app div.panel >.container .playgroundList .bottomBar a {
-    color: #3669a6;
-    font-size: 14px;
-    text-decoration: none;
+section#app div.panel > .container .playgroundList .bottomBar a {
+  color: #3669a6;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 1100px) {
-    section#app div.panel >.container .playgroundList .list .item {
-        width: 95%;
-    }
+  section#app div.panel > .container .playgroundList .list .item {
+    width: 95%;
+  }
 }
