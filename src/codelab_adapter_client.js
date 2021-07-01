@@ -43,6 +43,10 @@ const map = {
   node_yeelight: '',
 }
 
+
+
+Vue.use(VueMarkdown)
+
 const extensions_bar = new Vue({
   el: '#app',
   data: {
@@ -202,36 +206,18 @@ const extensions_bar = new Vue({
           this.allCurrentPage * this.allPageSize,
         )
         .forEach((key) => {
-          if (this.extensinFilter === undefined) {
-            if (!this.allNameFilter || key.includes(this.allNameFilter)) {
+          if (this.allFilter === undefined) {
+            if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
               result[key] = this.all_statu[key]
             }
           } else {
-            if (this.all_statu[key].is_running === this.allNameFilter) {
-              if (!this.allNameFilter || key.includes(this.allNameFilter)) {
+            if (this.all_statu[key].is_running === this.allFilter) {
+              if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
                 result[key] = this.all_statu[key]
               }
             }
           }
         })
-      // let filtedObj = {}
-      // Object.keys(this.nodes_statu)
-      //   .forEach((key) => {
-      //     if (this.nodeFilter === undefined) {
-      //       if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
-      //         filtedObj[key] = this.nodes_statu[key]
-      //       }
-      //     } else {
-      //       if (this.nodes_statu[key].is_running === this.nodeFilter) {
-      //         if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
-      //           filtedObj[key] = this.nodes_statu[key]
-      //         }
-      //       }
-      //     }
-      //   })
-      // console.log({ ...extsObj, ...filtedObj })
-      // return { ...extsObj, ...filtedObj }
-      // return [...this.filtedExts, ...this.filtedNodes]
       return result
     },
     all_statu() {
@@ -409,6 +395,9 @@ const extensions_bar = new Vue({
       console.log(`node statu change to ${content}`)
       // }
     },
+    includesStr(str,pattern) {
+
+    }
   },
   created: function () {
     // init
