@@ -299,7 +299,7 @@ section#app div.panel > .container .playgroundList .list .item .switch i {
 
 section#app div.panel > .container .playgroundList .bottomBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 2.5%;
 }
 section#app div.panel > .container .playgroundList .bottomBar a {
