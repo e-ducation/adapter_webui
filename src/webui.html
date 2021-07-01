@@ -391,7 +391,7 @@ todo
             >
             <a
               target="_blank"
-              :href="'https://make.aimaker.space/projects/editor?adapter_version=4.9.1&adapter_token='+token"
+              :href="'https://make.aimaker.space/projects/editor?adapter_version=0.9.0&adapter_token='+token"
               class="el-button el-button--primary el-button--small"
               >{{language.openScratch}}</a
             >
@@ -405,25 +405,25 @@ todo
                 <el-button-group size="small">
                   <el-button
                     size="small"
-                    :class="{active: extensinFilter === undefined}"
-                    @click="extensinFilter = undefined"
+                    :class="{active: allFilter === undefined}"
+                    @click="allFilter = undefined"
                     >{{language.all}}</el-button
                   >
                   <el-button
                     size="small"
-                    :class="{active: extensinFilter === true}"
-                    @click="extensinFilter = true"
+                    :class="{active: allFilter === true}"
+                    @click="allFilter = true"
                     >{{language.connected}}</el-button
                   >
                   <el-button
                     size="small"
-                    :class="{active: extensinFilter === false}"
-                    @click="extensinFilter = false"
+                    :class="{active: allFilter === false}"
+                    @click="allFilter = false"
                     >{{language.disconnected}}</el-button
                   >
                 </el-button-group>
                 <el-input
-                  v-model="extNameFilter"
+                  v-model="allNameFilter"
                   style="width: 250px"
                   size="small"
                   :placeholder="language.inputExtName"
@@ -841,8 +841,8 @@ todo
     </section>
     <!--for update-->
     <script src="/static/l10n.js"></script>
-    <script src="/static/rateLimiter.js?version=4.9.1"></script>
-    <script src="/static/codelab_adapter_base.js?version=4.9.1"></script>
-    <script src="/static/codelab_adapter_client.js?version=4.9.1"></script>
+    <script src="/static/rateLimiter.js?version=0.9.0"></script>
+    <script src="/static/codelab_adapter_base.js?version=0.9.0"></script>
+    <script src="/static/codelab_adapter_client.js?version=0.9.0"></script>
   </body>
 </html>
