@@ -71,6 +71,7 @@ const extensions_bar = new Vue({
       plugin_url: '',
       select_url: '',
     },
+    extensionListLength: 0,
     formLabelWidth: '120px',
     isCollapse: false,
     allNameFilter: '',
@@ -180,44 +181,54 @@ const extensions_bar = new Vue({
       console.log('filtedNode', filtedObj)
       return filtedObj
     },
-    extensionListLength() {
-      let result = {}
-      Object.keys(this.all_statu).forEach((key) => {
-        if (this.nodeFilter === undefined) {
-          if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
-            result[key] = this.all_statu[key]
-          }
-        } else {
-          if (this.nodes_statu[key].is_running === this.nodeFilter) {
-            if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
-              result[key] = this.all_statu[key]
-            }
-          }
-        }
-      })
-      return Object.keys(result).length
-    },
+    // extensionListLength() {
+    //   let result = {}
+    //   Object.keys(this.all_statu).forEach((key) => {
+    //     if (this.nodeFilter === undefined) {
+    //       if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+    //         result[key] = this.all_statu[key]
+    //       }
+    //     } else {
+    //       if (this.nodes_statu[key].is_running === this.nodeFilter) {
+    //         if (!this.nodeNameFilter || key.includes(this.nodeNameFilter)) {
+    //           result[key] = this.all_statu[key]
+    //         }
+    //       }
+    //     }
+    //   })
+    //   return Object.keys(result).length
+    // },
     extensionList() {
       let result = {}
+      let keys = []
       let all_statu = { ...this.exts_statu, ...this.nodes_statu }
       Object.keys(all_statu)
-        .slice(
-          (this.allCurrentPage - 1) * this.allPageSize,
-          this.allCurrentPage * this.allPageSize,
-        )
         .forEach((key) => {
           if (this.allFilter === undefined) {
             if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
-              result[key] = this.all_statu[key]
+              keys.push(key)
             }
           } else {
             if (this.all_statu[key].is_running === this.allFilter) {
               if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
-                result[key] = this.all_statu[key]
+                keys.push(key)
               }
             }
           }
         })
+
+        if(this.allNameFilter){
+          this.allCurrentPage = 1
+        }
+        this.extensionListLength = keys.length
+        keys = keys.slice(
+          (this.allCurrentPage - 1) * this.allPageSize,
+          this.allCurrentPage * this.allPageSize,
+        )
+        for(let key of keys){
+          result[key] = this.all_statu[key]
+        }
+      
       return result
     },
     all_statu() {
@@ -395,9 +406,6 @@ const extensions_bar = new Vue({
       console.log(`node statu change to ${content}`)
       // }
     },
-    includesStr(str,pattern) {
-
-    }
   },
   created: function () {
     // init
