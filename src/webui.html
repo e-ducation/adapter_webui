@@ -102,7 +102,25 @@ todo
         padding-left: 10px;
       }
 
+      .version > span {
+        background-color: #d7d7d7;
+        font-size: 12px;
+        color: #fff;
+        padding: 0 5px;
+        margin-left: 5px;
+        border-radius: 5px;
+      }
+
+      .tip {
+        font-size: 14px;
+        color: #999999;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #d4eefb;
+      }
+
       .markdown-container {
+        margin-top: 10px;
         padding: 100px 200px;
         background-color: #fff;
         line-height: 26px;
@@ -114,7 +132,7 @@ todo
       }
 
       .markdown-container a {
-        color: #00bbff
+        color: #00bbff;
       }
 
       .markdown-container .logo {
@@ -286,10 +304,18 @@ todo
             <span slot="title">{{language.aboutAdapter}}</span>
           </template>
           <!-- <a target="_blank" :href="'/env?adapter_token='+token"> -->
-          <el-menu-item index="2-1" class="menuItem" @click="handleClick('open_user_dir')">
+          <el-menu-item
+            index="2-1"
+            class="menuItem"
+            @click="handleClick('open_user_dir')"
+          >
             {{language.openUserDirectory}}
           </el-menu-item>
-          <el-menu-item index="2-2" class="menuItem" @click="showTypeToggle=false">
+          <el-menu-item
+            index="2-2"
+            class="menuItem"
+            @click="showTypeToggle=false"
+          >
             {{language.aboutAdapter}}
           </el-menu-item>
           <!-- </a> -->
@@ -299,7 +325,9 @@ todo
         <header class="new-header">
           <div class="left">
             <i class="el-icon-s-fold" @click="isCollapse = !isCollapse"></i>
-            <span class="version">{{language.version}}：0.9.0</span>
+            <span class="version"
+              >{{language.version}}：V0.9.0<span>beta</span></span
+            >
             <!-- <el-dropdown @command="val => currentLanguage = val">
               <span class="languageSelecter">
                 <img class="langugaeIcon" src="/static/language.svg">
@@ -397,6 +425,10 @@ todo
           </div>
         </header>
         <div class="container">
+          <div class="tip">
+            Adapter
+            控制中心是面向开发者的调试台，在正常教学活动中保持后台运行即可，无需打开此页面
+          </div>
           <div class="playgroundList extensionList" v-if="showTypeToggle">
             <div class="titleBar">
               <div class="left">{{language.extsList}}</div>
@@ -591,35 +623,64 @@ todo
           </div> -->
           <div class="about-adapter" v-if="!showTypeToggle">
             <div class="markdown-container">
-             <!-- <h1>英荔 Adapter</h1> -->
-             <div class="logo">
-              <img src="/static/logo.png"/>
-             </div>
-             <p>英荔 Adapter 是一个基础服务应用，可以让你的英荔图形化创作平台连接到更多的硬件、软件、通信协议，例如：小米魔方、大疆机甲大师、微信、MQTT协议等。</p>
-             <p> 使用英荔 Adapter 需要你的计算机可以正常运行英荔创作平台（安装有 Edge/Chrome/Firefox 浏览器中的一个，或是安装离线版的英荔创作平台）。</p>
-             <p> 英荔 Adapter 只提供计算机本地环境的搭建和消息传输，如果希望最大程度地发挥英荔 Adapter 的能力，还需要你的计算机可以正常接入互联网、具有蓝牙、WiFi 等通信能力。</p>
-             <p>英荔 Adapter 运行成功后会保持在后台运行，仅显示一个「AIM」图标在你屏幕的任务栏上。在正常的图形化编程活动中，无需开启 Adapter 控制中心。</p>
-             <h4>发布者</h4>
-             <p>广州英荔教育科技有限公司（ELITE EDTECH）</p>
-             <h4>开发者</h4>
-             <p>广州英荔教育科技有限公司（ELITE EDTECH）、广州涌乐编程俱乐部（CodeLab）</p>
-             <h4>当前版本与发布日期</h4>
-             <p>V0.9.0 Beta</p>
-             <p>2021/7/1</p>
-             <h4>占用存储空间大小</h4>
-             <p>500Mb 以上</p>
-             <h4>此应用的权限</h4>
-             <p>访问所有文件、外设、应用、程序和注册表</p>
-             <p>与已配对的蓝牙设备通信</p>
-             <p>访问家庭或工作网络</p>
-             <p>生成日志文件</p>
-             <h4>隐私性</h4>
-             <p>
-              英荔 Adapter 不会主动收集您的任何个人信息和使用数据。但您的使用数据可能会通过其他渠道发送给有限的利益相关方，如：您主动发送应用的完整错误报告、您基于英荔 Adapter 的功能使用了其他的应用或服务</p>
-             <h4>联系我们</h4>
-             <p>如您存在商务合作或其他业务需求，请致电客服热线 400-931-8118（工作日 9:00～18:00），或发送邮件至 <a>info@aimaker.space</a>
-             <p>
-              如您存在应用的使用问题或建议，请发送邮件至产品经理 Walter 的邮箱 <a>yc.zhong@eliteu.cn</a></p>
+              <!-- <h1>英荔 Adapter</h1> -->
+              <div class="logo">
+                <img src="/static/logo.png" />
+              </div>
+              <p>
+                英荔 Adapter
+                是一个基础服务应用，可以让你的英荔图形化创作平台连接到更多的硬件、软件、通信协议，例如：小米魔方、大疆机甲大师、微信、MQTT协议等。
+              </p>
+              <p>
+                使用英荔 Adapter 需要你的计算机可以正常运行英荔创作平台（安装有
+                Edge/Chrome/Firefox
+                浏览器中的一个，或是安装离线版的英荔创作平台）。
+              </p>
+              <p>
+                英荔 Adapter
+                只提供计算机本地环境的搭建和消息传输，如果希望最大程度地发挥英荔
+                Adapter
+                的能力，还需要你的计算机可以正常接入互联网、具有蓝牙、WiFi
+                等通信能力。
+              </p>
+              <p>
+                英荔 Adapter
+                运行成功后会保持在后台运行，仅显示一个「AIM」图标在你屏幕的任务栏上。在正常的图形化编程活动中，无需开启
+                Adapter 控制中心。
+              </p>
+              <h4>发布者</h4>
+              <p>广州英荔教育科技有限公司（ELITE EDTECH）</p>
+              <h4>开发者</h4>
+              <p>
+                广州英荔教育科技有限公司（ELITE
+                EDTECH）、广州涌乐编程俱乐部（CodeLab）
+              </p>
+              <h4>当前版本与发布日期</h4>
+              <p>V0.9.0 Beta</p>
+              <p>2021/7/1</p>
+              <h4>占用存储空间大小</h4>
+              <p>500Mb 以上</p>
+              <h4>此应用的权限</h4>
+              <p>访问所有文件、外设、应用、程序和注册表</p>
+              <p>与已配对的蓝牙设备通信</p>
+              <p>访问家庭或工作网络</p>
+              <p>生成日志文件</p>
+              <h4>隐私性</h4>
+              <p>
+                英荔 Adapter
+                不会主动收集你的任何个人信息和使用数据。但你的使用数据可能会通过其他渠道发送给有限的利益相关方，如：你主动发送应用的完整错误报告、你基于英荔
+                Adapter 的功能使用了其他的应用或服务
+              </p>
+              <h4>联系我们</h4>
+              <p>
+                如你存在商务合作或其他业务需求，请致电客服热线
+                400-931-8118（工作日 9:00～18:00），或发送邮件至
+                <a>info@aimaker.space</a>
+              </p>
+              <p>
+                如你存在应用的使用问题或建议，请发送邮件至产品经理 Walter 的邮箱
+                <a>yc.zhong@eliteu.cn</a>
+              </p>
             </div>
           </div>
         </div>
@@ -841,7 +902,7 @@ todo
     <!--for update-->
     <script src="/static/l10n.js"></script>
     <script src="/static/rateLimiter.js?version=0.9.0"></script>
-    <script src="/static/codelab_adapter_base.js?version=0.9.0"></script>
-    <script src="/static/codelab_adapter_client.js?version=0.9.0"></script>
+    <script src="/static/adapter_base.js?version=0.9.0"></script>
+    <script src="/static/adapter_client.js?version=0.9.0"></script>
   </body>
 </html>
