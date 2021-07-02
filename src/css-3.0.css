@@ -61,14 +61,6 @@
   background-color: #5080bb;
   color: white;
 }
-.el-msg {
-  margin: 20px 24px 0;
-  color: #898b8f;
-  padding: 8px 15px;
-  background-color: #e6f7ff;
-  border: 1px solid #91d5ff;
-  font-size: 14px;
-}
 body {
   background-color: #f7f9fc;
 }
@@ -186,7 +178,7 @@ section#app div.panel .new-header .right {
   padding-right: 24px;
 }
 section#app div.panel > .container {
-  padding: 26px 24px;
+  padding: 10px 24px 26px;
   display: flex;
   flex-direction: column;
 }
@@ -239,8 +231,8 @@ section#app div.panel > .container .playgroundList .list .item {
   display: flex;
 }
 section#app div.panel > .container .playgroundList .list .item .extensionImg {
-  width: 120px;
-  height: 80px;
+  width: 100px;
+  height: 70px;
   flex-shrink: 0;
   border-radius: 4px;
 }
@@ -253,7 +245,6 @@ section#app div.panel > .container .playgroundList .list .item .content {
   align-items: flex-start;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 15px;
 }
 section#app div.panel > .container .playgroundList .list .item .content .title {
   color: rgba(0, 0, 0, 0.65);
@@ -264,7 +255,7 @@ section#app div.panel > .container .playgroundList .list .item .content p.desc {
   margin-bottom: 0;
 }
 section#app div.panel > .container .playgroundList.extensionList {
-  margin-top: 27px;
+  margin-top: 10px;
   padding-bottom: 32px;
 }
 section#app div.panel > .container .playgroundList .list .item .switch {
