@@ -205,12 +205,12 @@ const extensions_bar = new Vue({
       Object.keys(all_statu)
         .forEach((key) => {
           if (this.allFilter === undefined) {
-            if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
+            if (!this.allNameFilter || this.map[key]?.includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
               keys.push(key)
             }
           } else {
             if (this.all_statu[key].is_running === this.allFilter) {
-              if (!this.allNameFilter || this.map[key].includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
+              if (!this.allNameFilter || this.map[key]?.includes(this.allNameFilter) || key.includes(this.allNameFilter)) {
                 keys.push(key)
               }
             }
