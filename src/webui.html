@@ -12,6 +12,8 @@ todo
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script src="/static/axios.min.js"></script>
     <script src="/static/vue.min.js"></script>
     <script src="/static/socket.io.slim.js"></script>
@@ -114,7 +116,7 @@ todo
       .tip {
         font-size: 14px;
         color: #999999;
-        padding: 5px 10px;
+        padding: 9px 10px;
         border-radius: 5px;
         background-color: #d4eefb;
       }
@@ -162,172 +164,72 @@ todo
   <body>
     <section id="app" v-cloak>
       <el-menu
-        default-active="1-1"
+        :default-active='defaultMenu'
         :collapse-transition="false"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         :collapse="isCollapse"
+        @select="selectMenuItem"
       >
         <el-menu-item class="logo">
           <span v-if="!isCollapse"> Adapter </span>
           <img v-else width="40px" height="40px" src="/static/logo.png" />
         </el-menu-item>
-        <!-- <el-submenu index="1">
-          <template slot="title">
-            <img src="/static/icon-console-nor.png" />
-            <span slot="title">{{language.controlPanel}}</span>
-          </template>
-          <el-menu-item index="1-1" @click="showTypeToggle=true"
-            >{{language.extensionStatus}}</el-menu-item
-          >
-          <el-menu-item index="1-2" @click="showTypeToggle=false"
-            >{{language.nodeStatus}}</el-menu-item
-          >
-        </el-submenu> -->
         <el-submenu index="1">
           <template slot="title">
-            <img src="/static/icon-plugins-nor.png" />
-            <span slot="title">{{language.plugin}}</span>
-          </template>
-          <el-menu-item index="1-1" @click="showTypeToggle=true"
-            >{{language.extensionStatus}}</el-menu-item
-          >
-          <el-menu-item
-            index="1-2"
-            class="menuItem"
-            @click="dialogFormVisible = true"
-          >
-            {{language.downloadPlugin}}
-          </el-menu-item>
-          <!-- <el-menu-item
-            class="menuItem"
-            @click="handleClick('extensions_open_dir')"
-          >
-            {{language.openPluginDirectory}}
-          </el-menu-item> -->
-        </el-submenu>
-        <!-- <el-submenu index="3">
-          <template slot="title">
-            <img src="/static/icon-record-nor.png" />
-            <span slot="title">{{language.log}}</span>
-          </template>
-          <el-menu-item class="menuItem" @click="handleClick('log_open')">
-            {{language.openLogDirectory}}
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">
-            <img src="/static/icon-help-nor.png" />
-            <span slot="title">{{language.help}}</span>
-          </template>
-          <a target="_blank" href="https://adapter.codelab.club">
-            <el-menu-item class="menuItem" @click="handleClick('42')">
-              {{language.documentation}}
-            </el-menu-item>
-          </a>
-          <a target="_blank" href="https://discuss.codelab.club">
-            <el-menu-item class="menuItem"> {{language.discuss}} </el-menu-item>
-          </a>
-          <a target="_blank" :href="'/webdebug?adapter_token='+token">
-            <el-menu-item class="menuItem"> {{language.debug}} </el-menu-item>
-          </a>
-          <a target="_blank" :href="'/web_log_page?adapter_token='+token">
-            <el-menu-item class="menuItem"> {{language.viewLog}} </el-menu-item>
-          </a>
-          <el-menu-item class="menuItem" @click="handleClick('open_user_dir')">
-            {{language.openUserDirectory}}
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="5">
-          <template slot="title">
-            <img src="/static/icon-environment-nor.png" />
-            <span slot="title">{{language.env}}</span>
-          </template>
-          <a target="_blank" :href="'/env?adapter_token='+token">
-            <el-menu-item class="menuItem"> {{language.view}} </el-menu-item>
-          </a>
-          <el-menu-item class="menuItem" @click="handleClick('refresh_env')">
-            {{language.refresh}}
-          </el-menu-item>
-          <a target="_blank" :href="'/api/list_nodes_pid?adapter_token='+token">
-            <el-menu-item class="menuItem">
-              {{language.runningNode}}
-            </el-menu-item>
-          </a>
-          <el-menu-item
-            class="menuItem"
-            @click="handleClick('extensions_update')"
-          >
-            {{language.updateplugin}}
-          </el-menu-item>
-          <el-menu-item
-            class="menuItem"
-            @click="handleClick('incremental_update')"
-          >
-            {{language.incrementalUpdate}}
-          </el-menu-item>
-          <el-menu-item class="menuItem" @click="handleClick('openHostsDir')">
-            {{language.openHostsDir}}
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="6">
-          <template slot="title">
             <img src="/static/icon-about-nor.png" />
-            <span slot="title">{{language.about}}</span>
-          </template>
-          <a target="_blank" href="https://adapter.codelab.club">
-            <el-menu-item class="menuItem">
-              About CodeLab Adapter
-            </el-menu-item>
-          </a>
-          <a target="_blank" href="https://adapter.codelab.club/about/License/">
-            <el-menu-item class="menuItem"> License </el-menu-item>
-          </a>
-          <a target="_blank" href="https://adapter.codelab.club/about/why/">
-            <el-menu-item class="menuItem"> Why </el-menu-item>
-          </a>
-          <el-menu-item class="menuItem"> Fun </el-menu-item>
-          <a target="_blank" href="https://adapter.codelab.club/changelog/">
-            <el-menu-item class="menuItem"> Changelog </el-menu-item>
-          </a>
-        </el-submenu>
-        <el-submenu index="7">
-          <template slot="title">
-            <img src="/static/icon-about-nor.png" />
-            <span slot="title">Linda</span>
-          </template>
-          <a target="_blank" :href="'/linda_viz?adapter_token='+token">
-            <el-menu-item class="menuItem"> 可视化 </el-menu-item>
-          </a>
-          <a
-            target="_blank"
-            href="https://adapter.codelab.club/user_guide/Linda/"
-          >
-            <el-menu-item class="menuItem"> console </el-menu-item>
-          </a>
-        </el-submenu> -->
-        <el-submenu index="2">
-          <template slot="title">
-            <img src="/static/icon-about-nor.png" />
-            <span slot="title">{{language.aboutAdapter}}</span>
+            <span slot="title">{{language.BasicOptions}}</span>
           </template>
           <!-- <a target="_blank" :href="'/env?adapter_token='+token"> -->
           <el-menu-item
-            index="2-1"
+            index="1-1"
             class="menuItem"
-            @click="handleClick('open_user_dir')"
+            @click="showTypeToggle=1"
           >
-            {{language.openUserDirectory}}
+            {{language.adapterSet}}
           </el-menu-item>
           <el-menu-item
-            index="2-2"
+            index="1-2"
             class="menuItem"
-            @click="showTypeToggle=false"
+            @click="handlerEev"
+          >
+            {{language.environmental}}
+          </el-menu-item>
+          <a target="_blank" href="https://www.baidu.com/">
+            <el-menu-item index="1-3" class="menuItem">{{language.explanation}}</el-menu-item>
+          </a>
+          <el-menu-item
+            index="1-4"
+            class="menuItem"
+            @click="showTypeToggle=3"
           >
             {{language.aboutAdapter}}
           </el-menu-item>
           <!-- </a> -->
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title">
+            <img src="/static/icon-plugins-nor.png" />
+            <span slot="title">{{language.plugin}}</span>
+          </template>
+          <el-menu-item 
+            index="2-1"
+          >
+            {{language.extensionStatus}}
+          </el-menu-item>
+          <el-menu-item
+            index="2-2"
+            class="menuItem"
+          >
+            {{language.downloadPlugin}}
+          </el-menu-item>
+          <el-menu-item
+            index="2-3"
+            class="menuItem"
+          >
+            {{language.openUserDirectory}}
+          </el-menu-item>
         </el-submenu>
       </el-menu>
       <div class="panel">
@@ -335,68 +237,10 @@ todo
           <div class="left">
             <i class="el-icon-s-fold" @click="isCollapse = !isCollapse"></i>
             <span class="version"
-              >{{language.version}}：V0.9.0<span>beta</span></span
+              >{{language.version}}：V1.0.0<span>beta</span></span
             >
-            <!-- <el-dropdown @command="val => currentLanguage = val">
-              <span class="languageSelecter">
-                <img class="langugaeIcon" src="/static/language.svg">
-                <svg
-                  width="24px"
-                  height="24px"
-                  class="langugaeIcon"
-                  viewBox="0 0 20 20"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <title>Language</title>
-                  <desc>Created with Sketch.</desc>
-                  <defs></defs>
-                  <g
-                    id="Page-1"
-                    stroke="none"
-                    stroke-width="1"
-                    fill="none"
-                    fill-rule="evenodd"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <g id="Language" stroke="#585858" stroke-width="1.25">
-                      <g
-                        id="language"
-                        transform="translate(2.000000, 2.000000)"
-                      >
-                        <path
-                          d="M15.6352,8.11294118 C15.6352,12.2682353 12.2667294,15.6357647 8.11237647,15.6357647 C3.95708235,15.6357647 0.588611765,12.2682353 0.588611765,8.11294118 C0.588611765,3.95764706 3.95708235,0.589176471 8.11237647,0.589176471 C12.2667294,0.589176471 15.6352,3.95764706 15.6352,8.11294118 Z"
-                          id="Stroke-1"
-                        ></path>
-                        <path
-                          d="M11.9808,8.11661176 C11.9808,9.74955294 11.7153882,11.2601412 11.2542118,12.4921412 C10.5558588,14.3933176 9.40762353,15.6347294 8.11068235,15.6347294 C6.81374118,15.6347294 5.66927059,14.3933176 4.96715294,12.4921412 C4.51068235,11.2601412 4.24432941,9.74955294 4.24432941,8.11661176 C4.24432941,6.48272941 4.51068235,4.97308235 4.96715294,3.74108235 C5.66927059,1.82955294 6.81374118,0.588141176 8.11068235,0.588141176 C9.40762353,0.588141176 10.5558588,1.82955294 11.2542118,3.74108235 C11.7153882,4.97308235 11.9808,6.48272941 11.9808,8.11661176 Z"
-                          id="Stroke-3"
-                        ></path>
-                        <path
-                          d="M0.955011765,10.2811294 L15.2684235,10.2811294"
-                          id="Stroke-5"
-                        ></path>
-                        <path
-                          d="M0.955011765,5.94663529 L15.2684235,5.94663529"
-                          id="Stroke-7"
-                        ></path>
-                        <path
-                          d="M8.11218824,0.590023529 L8.11218824,15.6375529"
-                          id="Stroke-9"
-                        ></path>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-                <i class="el-icon-caret-bottom"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="zh-cn">简体中文</el-dropdown-item>
-                <el-dropdown-item command="en">English</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown> -->
+            <!-- <span class="version">{{language.localIp}}：{{returnCitySN.cip}}</span> -->
+            <span class="version">{{language.localIp}}：{{ip}}</span>
           </div>
           <div class="right">
             <div class="indicatorBar">
@@ -410,14 +254,15 @@ todo
               >
             </div>
             <el-button
-              type="danger"
+              plain
               :disabled="status !== 'connected!'"
               size="small"
               @click="exit_adapter_app"
+              class="exitbtn"
               >{{status === 'connected!' ? language.exit :
               language.exited}}</el-button
             >
-            <el-button
+            <!-- <el-button
               id="token"
               :data-clipboard-text="token"
               type="primary"
@@ -430,15 +275,70 @@ todo
               :href="'https://make.aimaker.space/projects/editor?adapter_version=0.9.0&adapter_token='+token"
               class="el-button el-button--primary el-button--small"
               >{{language.openScratch}}</a
-            >
+            > -->
           </div>
         </header>
         <div class="container">
           <div class="tip">
-            Adapter
-            控制中心是面向开发者的调试台，在正常教学活动中保持后台运行即可，无需打开此页面
+            {{
+              showTypeToggle === 4?
+              '开发者选项中的设置可能会对 Adapter 本身造成影响，请谨慎操作，若出现难以恢复的错误，请联系管理员重装 Adapter'
+              :
+              'Adapter 控制中心是面向开发者的调试台，在正常教学活动中保持后台运行即可，无需打开此页面'
+            }}
           </div>
-          <div class="playgroundList extensionList" v-if="showTypeToggle">
+          <div class="settings" v-if="showTypeToggle===1">
+            <div class="setList">
+              <div>
+                <p class="title">开机自动启动</p>
+                <p class="des">英荔 Adapter 在后台运行时仅占用非常少的资源，建议你保持此选项的开启，提高编程效率。</p>
+              </div>
+              <div>
+                <el-switch
+                  active-color="#376fb3"
+                  v-model="autoStart"
+                  @change="handlerSwitch($event, 1)"
+                >
+                </el-switch>
+              </div>
+            </div>
+            <div class="setList">
+              <div>
+                <p class="title">自动更新扩展</p>
+                <p class="des">
+                  开启后，英荔 Adapter 将在每次启动时，自动将所有已添加的扩展更新到最新版本。建议常用图形化编程的创作者保持开启。
+                </p>
+              </div>
+              <div>
+                <el-switch
+                  active-color="#376fb3"
+                  v-model="autoUpdate"
+                  @change="handlerSwitch($event, 2)"
+                >
+                </el-switch>
+              </div>
+            </div>
+            <div class="setList">
+              <div>
+                <p class="title">Adapter 动态令牌</p>
+                <p class="des">{{token}}</p>
+              </div>
+              <div>
+                <el-button
+                  id="token"
+                  :data-clipboard-text="token"
+                  type="primary"
+                  size="small"
+                  @click="$message({message: '复制令牌成功，你可以将它粘贴到其他地方',type: 'success'})"
+                  >{{language.copyToken}}</el-button
+                >
+              </div>
+            </div>
+          </div>
+          <div class="envStyle" v-if="showTypeToggle===2" ref="environmental">
+            <pre>{{envData}}</pre>
+          </div>
+          <div class="playgroundList extensionList" v-if="showTypeToggle===4">
             <div class="titleBar">
               <div class="left">{{language.extsList}}</div>
               <div class="right">
@@ -519,13 +419,14 @@ todo
               <i class="itemFix"></i>
             </div>
             <div class="bottomBar">
-              <!-- <div>
-                <a
+              <div>
+                <!-- <a
                   target="_blank"
                   href="https://adapter.codelab.club/extension_guide/extension_market/"
                   >没有找到想要的插件？</a
-                >
-              </div> -->
+                > -->
+                <span @click="showTypeToggle=3, defaultMenu='1-4'">没有找到想要的插件？</span>
+              </div>
               <el-pagination
                 @size-change="val => allPageSize = val"
                 :page-sizes="[6, 10, 20]"
@@ -538,99 +439,7 @@ todo
               </el-pagination>
             </div>
           </div>
-          <!-- <div class="playgroundList extensionList" v-else="!showTypeToggle">
-            <div class="titleBar">
-              <div class="left">{{language.nodeList}}</div>
-              <div class="right">
-                <el-button-group size="small">
-                  <el-button
-                    size="small"
-                    :class="{active: nodeFilter === undefined}"
-                    @click="nodeFilter = undefined"
-                    >{{language.all}}</el-button
-                  >
-                  <el-button
-                    size="small"
-                    :class="{active: nodeFilter === true}"
-                    @click="nodeFilter = true"
-                    >{{language.connected}}</el-button
-                  >
-                  <el-button
-                    size="small"
-                    :class="{active: nodeFilter === false}"
-                    @click="nodeFilter = false"
-                    >{{language.disconnected}}</el-button
-                  >
-                </el-button-group>
-                <el-input
-                  v-model="nodeNameFilter"
-                  style="width: 250px"
-                  size="small"
-                  :placeholder="language.inputNodeName"
-                  suffix-icon="el-icon-search"
-                >
-                </el-input>
-              </div>
-            </div>
-            <div class="list">
-              <div class="item" v-for="(statu_info, node) in filtedNodes">
-                <img
-                  class="extensionImg"
-                  :src="statu_info['ICON_URL'] || '/static/new_logo.png'"
-                />
-                <div class="content">
-                  <el-tooltip
-                    effect="dark"
-                    content="click for help"
-                    placement="left"
-                  >
-                  <el-link
-                    class="title"
-                    :href="statu_info['HELP_URL']"
-                    target="_blank"
-                    >{{ node }}
-                  </el-link>
-                  </el-tooltip>
-                  <p class="desc">{{ statu_info['DESCRIPTION'] }}</p>
-                </div>
-                <div class="switch">
-                  <i
-                    v-if="nodes_statu[node]['is_running']"
-                    class="el-icon-connection"
-                    style="color: green"
-                  ></i>
-                  <el-switch
-                    :class="{is_running: nodes_statu[node]['is_running']}"
-                    :id="node"
-                    @change="check($event, node,'node')"
-                    v-model="nodes_statu[node]['is_running']"
-                  >
-                  </el-switch>
-                </div>
-              </div>
-              <i class="itemFix"></i>
-            </div>
-            <div class="bottomBar">
-              <div>
-                <a
-                  target="_blank"
-                  href="https://adapter.codelab.club/extension_guide/extension_market/"
-                  >没有找到想要的节点？</a
-                >
-              </div>
-              <el-pagination
-                @size-change="val => nodePageSize = val"
-                :page-sizes="[6, 10, 20]"
-                @current-change="(val) => nodeCurrentPage = val"
-                :current-page="nodeCurrentPage"
-                :page-size="10"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="filtedNodesLength"
-              >
-              </el-pagination>
-            </div>
-          </div> -->
-          <div class="about-adapter" v-if="!showTypeToggle">
+          <div class="about-adapter" v-if="showTypeToggle===3">
             <div class="markdown-container">
               <!-- <h1>英荔 Adapter</h1> -->
               <div class="logo">
@@ -791,103 +600,6 @@ todo
       <el-button class="menuBtn" v-on:click="showMenu = !showMenu"
         >{{ "<<" }} helper</el-button
       >
-      <!--
-            <el-drawer :modal="false" :visible.sync="showMenu" direction="rtl">
-                <el-collapse class="collapse" accordion>
-                    <el-collapse-item title="帮助(help)" name="4">
-                        <div class="menuItem" @click="handleClick('42')">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club"
-                                >文档(Documentation)</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            <a target="_blank" :href="'/webdebug?adapter_token='+token">调试(debug)</a>
-                        </div>
-                        <div class="menuItem">
-                            <a target="_blank" :href="'/web_log_page?adapter_token='+token"
-                                >查看日志(view log)</a
-                            >
-                        </div>
-                        <div
-                            class="menuItem"
-                            @click="handleClick('open_user_dir')"
-                        >
-                            打开用户目录(Open user directory)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="扩展(Plugin)" name="1">
-                        <div
-                            class="menuItem"
-                            @click="handleClick('extensions_update')"
-                        >
-                            更新扩展(Update plugin)
-                        </div>
-                        <div
-                            class="menuItem"
-                            @click="handleClick('extensions_open_dir')"
-                        >
-                            打开扩展目录(Open plugin directory)
-                        </div>
-                        <div class="menuItem" @click="dialogFormVisible = true">
-                            下载 Plugin(Download Plugin)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="日志(log)" name="2">
-                        <div class="menuItem" @click="handleClick('log_open')">
-                            打开日志目录(Open log directory)
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="关于(about)" name="3">
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club"
-                                >About CodeLab Adapter</a
-                            >
-                        </div>
-
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/about/License/"
-                                >License</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/about/why/"
-                                >Why</a
-                            >
-                        </div>
-                        <div class="menuItem">
-                            Fun
-                        </div>
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                href="https://adapter.codelab.club/changelog/"
-                                >Changelog
-                            </a>
-                        </div>
-                    </el-collapse-item>
-                    <el-collapse-item title="环境(env)" name="5">
-                        <div class="menuItem">
-                            <a
-                                target="_blank"
-                                :href="'/env?adapter_token='+token"
-                                >查看(view)</a
-                            >
-                        </div>
-                        <div class="menuItem" @click="handleClick('refresh_env')">
-                                刷新(refresh)
-                        </div>
-                    </el-collapse-item>
-                </el-collapse>
-            </el-drawer>
-            -->
       <el-dialog title="plugin download" :visible.sync="dialogFormVisible">
         <!--label-width 无效-->
         <el-form :model="form">
@@ -905,6 +617,44 @@ todo
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">Cancel</el-button>
           <el-button type="primary" @click="plugin_download">Confirm</el-button>
+        </div>
+      </el-dialog>
+
+      <!-- 密码认证 -->
+      <el-dialog 
+        title="安全提示" 
+        :visible.sync="passwordDialog" 
+        :show-close="false"
+        class="pwd-dialog"
+        width="480px"
+        destroy-on-close="true"
+      >
+        <p>开发者选项中的设置可能会对英荔 Adapter 本身造成严重影响，为保护英荔 Adapter 服务的稳定，进入开发者模式需要授权，请与管理员联系。</p>
+        <el-form 
+          :model="ruleForm" 
+          ref="ruleForm"
+          hide-required-asterisk="true"
+          class="pwd-form"
+        >
+          <el-form-item 
+            label="密码：" 
+            prop="pass" 
+            :rules="[
+              { required: true, message: '请输入密码' }
+            ]"
+            :error="pwdError"
+          >
+            <el-input type="password" v-model="ruleForm.pass" autocomplete="off" size="small"></el-input>
+          </el-form-item>
+          <el-form-item 
+            prop="manager"
+          >
+            <el-checkbox v-model="ruleForm.manager">我是管理员，本机不再需要输入密码</el-checkbox>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer-2">
+          <el-button @click="goBack">返回首页</el-button>
+          <el-button @click="submitForm('ruleForm')" type="primary">确定</el-button>
         </div>
       </el-dialog>
     </section>

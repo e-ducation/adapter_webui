@@ -1,6 +1,6 @@
 window.language = {
   'zh-cn': {
-    exit: '退出',
+    exit: '退出 Adapter',
     exited: '已退出',
     copyToken: '复制令牌',
     openScratch: '打开创作平台',
@@ -22,7 +22,7 @@ window.language = {
     debug: '调试',
     viewLog: '查看日志',
     openUserDirectory: '打开用户目录',
-    plugin: '扩展',
+    plugin: '开发者选项',
     updateplugin: '重置主目录',
     incrementalUpdate: '增量更新软件包',
     openHostsDir: '打开 hosts 目录',
@@ -36,9 +36,14 @@ window.language = {
     refresh: '刷新',
     runningNode: '正在运行的Nodes',
     aboutAdapter: '关于 Adapter',
+    localIp: '本机 IP 地址',
+    adapterSet: 'Adapter 设置',
+    environmental: '查看环境信息',
+    explanation: '使用说明',
+    BasicOptions: '基础选项'
   },
   en: {
-    exit: 'Exit',
+    exit: 'Exit Adapter',
     exited: 'Exited',
     copyToken: 'Copy token',
     openScratch: 'Open Scratch',
@@ -60,7 +65,7 @@ window.language = {
     debug: 'Debug',
     viewLog: 'View Log',
     openUserDirectory: 'Open User Directory',
-    plugin: 'Plugin',
+    plugin: 'Developer Options',
     updateplugin: 'Reset Home Directory',
     incrementalUpdate: 'Incremental Update',
     openHostsDir: 'Open hosts Directory',
@@ -73,5 +78,10 @@ window.language = {
     view: 'View',
     refresh: 'Refresh',
     runningNode: 'Running Nodes',
+    localIp: 'Local IP address',
+    adapterSet: 'Adapter settings',
+    environmental: 'View environmental information',
+    explanation: 'Instructions for use',
+    BasicOptions: 'Basic options'
   },
 }

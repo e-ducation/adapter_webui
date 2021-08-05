@@ -6,6 +6,7 @@
 }
 .el-pagination {
   text-align: right;
+  flex: 1;
 }
 .el-pager li.active {
   color: #376fb3;
@@ -291,13 +292,93 @@ section#app div.panel > .container .playgroundList .list .item .switch i {
 
 section#app div.panel > .container .playgroundList .bottomBar {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   padding: 0 2.5%;
+  align-items: center;
 }
-section#app div.panel > .container .playgroundList .bottomBar a {
+section#app div.panel > .container .playgroundList .bottomBar span {
   color: #3669a6;
   font-size: 14px;
   text-decoration: none;
+  cursor: pointer;
+}
+.exitbtn{
+  color: #376fb3 !important;
+  border-color: #376fb3 !important;
+}
+.settings, .envStyle{
+  background-color: #ffffff;
+  border-radius: 2px;
+  margin-top: 24px;
+  padding: 0 30px 30px;
+}
+.settings .setList{
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+.settings .setList>div:first-child{
+  flex: 1;
+  text-align: left;
+}
+.settings .setList p, .pwd-dialog p{
+  margin: 0;
+  padding: 0;
+  line-height: 22px;
+}
+.settings .setList .title{
+  line-height: 24px;
+  font-family: PingFangSC-Medium;
+  color: rgba(0, 0, 0, 0.85);
+}
+.settings .setList .des{
+  font-size: 14px;
+  color: #999999;
+}
+.pwd-dialog{
+  text-align: left;
+}
+.pwd-dialog .el-dialog__header{
+  padding: 16px 24px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: PingFangSC-Medium;
+}
+.pwd-dialog .el-dialog__body{
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 24px;
+}
+.pwd-form .el-input{
+  width: 180px;
+}
+.pwd-form{
+  margin-top: 12px;
+}
+.pwd-form .el-form-item:first-child .el-form-item__content{
+  margin-left: 54px;
+}
+.pwd-form .el-form-item__content .el-form-item__error{
+  position: initial;
+}
+.pwd-form .el-form-item{
+  margin-bottom: 0;
+}
+.envStyle pre{
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  text-align: left;
+  font-size: 13px;
+}
+.dialog-footer-2 .el-button--default{
+  border: 1px solid #DCDFE6 !important;
+  color: #606266 !important;
+  background: #FFF !important;
+}
+.dialog-footer-2 .el-button--primary{
+  width: 98px;
+  border: 1px solid #376fb3 !important;
+  background-color: #376fb3 !important;
 }
 
 @media screen and (max-width: 1100px) {
