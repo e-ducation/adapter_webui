@@ -288,7 +288,7 @@ todo
             }}
           </div>
           <div class="settings" v-if="showTypeToggle===1">
-            <div class="setList">
+            <!-- <div class="setList">
               <div>
                 <p class="title">开机自动启动</p>
                 <p class="des">英荔 Adapter 在后台运行时仅占用非常少的资源，建议你保持此选项的开启，提高编程效率。</p>
@@ -317,7 +317,7 @@ todo
                 >
                 </el-switch>
               </div>
-            </div>
+            </div> -->
             <div class="setList">
               <div>
                 <p class="title">Adapter 动态令牌</p>
@@ -425,7 +425,11 @@ todo
                   href="https://adapter.codelab.club/extension_guide/extension_market/"
                   >没有找到想要的插件？</a
                 > -->
-                <span @click="showTypeToggle=3, defaultMenu='1-4'">没有找到想要的插件？</span>
+                <span 
+                  @click="showTypeToggle=3, defaultMenu='1-4', document.body.scrollTop = document.documentElement.scrollTop = 0"
+                >
+                  没有找到想要的插件？
+                </span>
               </div>
               <el-pagination
                 @size-change="val => allPageSize = val"
