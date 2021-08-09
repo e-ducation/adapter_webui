@@ -648,7 +648,7 @@ todo
             ]"
             :error="pwdError"
           >
-            <el-input type="password" v-model="ruleForm.pass" autocomplete="off" size="small"></el-input>
+            <el-input placeholder="请输入" type="password" v-model="ruleForm.pass" autocomplete="off" size="small"></el-input>
           </el-form-item>
           <el-form-item 
             prop="manager"
@@ -657,8 +657,8 @@ todo
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer-2">
-          <el-button @click="goBack">返回首页</el-button>
-          <el-button @click="submitForm('ruleForm')" type="primary">确定</el-button>
+          <el-button @click="goBack" size="small">取消</el-button>
+          <el-button @click="submitForm('ruleForm')" type="primary" size="small">确定</el-button>
         </div>
       </el-dialog>
     </section>

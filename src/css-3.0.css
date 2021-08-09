@@ -338,6 +338,11 @@ section#app div.panel > .container .playgroundList .bottomBar span {
 }
 .pwd-dialog{
   text-align: left;
+  display: flex;
+  align-items: center;
+}
+.pwd-dialog .el-dialog{
+  margin: 0 auto !important;
 }
 .pwd-dialog .el-dialog__header{
   padding: 16px 24px;
@@ -348,6 +353,16 @@ section#app div.panel > .container .playgroundList .bottomBar span {
   border-bottom: 1px solid rgba(0,0,0,0.06);
   border-top: 1px solid rgba(0,0,0,0.06);
   padding: 24px;
+}
+.pwd-dialog .el-dialog__footer{
+  padding: 10px 16px;
+}
+.pwd-dialog .el-checkbox__input.is-checked+.el-checkbox__label{
+  color: #606266;
+}
+.pwd-dialog .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+  background-color: #376fb3;
+  border-color: #376fb3;
 }
 .pwd-form .el-input{
   width: 180px;
@@ -376,9 +391,11 @@ section#app div.panel > .container .playgroundList .bottomBar span {
   background: #FFF !important;
 }
 .dialog-footer-2 .el-button--primary{
-  width: 98px;
   border: 1px solid #376fb3 !important;
   background-color: #376fb3 !important;
+}
+.dialog-footer-2 .el-button--small{
+  width: 65px;
 }
 
 @media screen and (max-width: 1100px) {
