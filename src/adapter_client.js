@@ -508,6 +508,7 @@ const extensions_bar = new Vue({
         pass: '',
         manager: false
       };
+      this.pwdError = '';
     },
     handlerEev() {
       this.showTypeToggle = 2;
