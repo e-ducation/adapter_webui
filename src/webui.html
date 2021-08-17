@@ -631,7 +631,8 @@ todo
         :show-close="false"
         class="pwd-dialog"
         width="480px"
-        destroy-on-close="true"
+        :destroy-on-close="true"
+        :close-on-click-modal="false"
       >
         <p>开发者选项中的设置可能会对英荔 Adapter 本身造成严重影响，为保护英荔 Adapter 服务的稳定，进入开发者模式需要授权，请与管理员联系。</p>
         <el-form 
