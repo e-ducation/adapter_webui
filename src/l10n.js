@@ -14,7 +14,7 @@ window.language = {
     all: '全部',
     inputExtName: '请输入插件名称',
     inputNodeName: '请输入节点名称',
-    extsList: '插件列表',
+    extsList: '扩展列表',
     nodeList: '节点列表',
     help: '帮助',
     documentation: '文档',
