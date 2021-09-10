@@ -469,7 +469,7 @@ const extensions_bar = new Vue({
         if (valid) {
           axios
             .post(
-              'https://api.dev.longan.eliteu.xyz/api/v1/adapter/check_password/',
+              'https://api.aimaker.space/api/v1/adapter/check_password/',
               { password: this.ruleForm.pass }
             )
             .then(response => {
