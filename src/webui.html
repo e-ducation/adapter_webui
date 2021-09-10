@@ -198,9 +198,13 @@ todo
           >
             {{language.environmental}}
           </el-menu-item>
-          <a target="_blank" href="https://www.aimaker.space">
-            <el-menu-item index="1-3" class="menuItem">{{language.explanation}}</el-menu-item>
-          </a>
+          <el-menu-item 
+            index="1-3" 
+            class="menuItem" 
+            @click="showTypeToggle=5"
+          >
+            {{language.explanation}}
+          </el-menu-item>
           <el-menu-item
             index="1-4"
             class="menuItem"
@@ -339,6 +343,17 @@ todo
           </div>
           <div class="envStyle" v-if="showTypeToggle===2" ref="environmental">
             <pre>{{envData}}</pre>
+          </div>
+          <div class="explanation" v-if="showTypeToggle===5">
+            <div className={styles.videoBox}>
+              <video 
+                width="800" 
+                height="600" 
+                controls 
+                src="https://1251349076.vod2.myqcloud.com/45e704edvodtransgzp1251349076/f077cbda5285890816676865803/v.f39758.mp4"
+              >
+              </video>
+            </div>
           </div>
           <div class="playgroundList extensionList" v-if="showTypeToggle===4">
             <div class="titleBar">

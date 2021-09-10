@@ -400,6 +400,12 @@ section#app div.panel > .container .playgroundList .bottomBar span {
 .el-menu-item.is-active{
   border-right: 3px solid #376fb3;
 }
+.explanation{
+  background: #fff;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 0 30px 70px;
+}
 
 @media screen and (max-width: 1100px) {
   section#app div.panel > .container .playgroundList .list .item {
