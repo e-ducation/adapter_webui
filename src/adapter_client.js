@@ -423,13 +423,9 @@ const extensions_bar = new Vue({
           status_checked_map[content];
         console.log(`extension statu change to ${content}`);
       }
-      //if (extension_node_name.startsWith('node_')) {
-      const t2 = this.nodes_statu[extension_node_name];
-      console.log(`this nodes_statu extension_node_name ${t2}`);
       this.nodes_statu[extension_node_name]['is_running'] =
         status_checked_map[content];
       console.log(`node statu change to ${content}`);
-      //}
     },
     selectMenuItem(key, keyPath) {
       console.log(`selectMenuItem:`, key, keyPath);
