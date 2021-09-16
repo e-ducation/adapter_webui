@@ -424,8 +424,8 @@ const extensions_bar = new Vue({
         console.log(`extension statu change to ${content}`);
       }
       //if (extension_node_name.startsWith('node_')) {
-      
-      console.log(`this nodes_statu extension_node_name ${this.nodes_statu[extension_node_name]}`);
+      const t2 = this.nodes_statu[extension_node_name];
+      console.log(`this nodes_statu extension_node_name ${t2}`);
       this.nodes_statu[extension_node_name]['is_running'] =
         status_checked_map[content];
       console.log(`node statu change to ${content}`);
