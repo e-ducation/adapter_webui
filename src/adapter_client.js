@@ -418,16 +418,16 @@ const extensions_bar = new Vue({
     },
     node_statu_change_callback(extension_node_name, content) {
       const status_checked_map = { start: true, stop: false };
-      if (extension_node_name.startsWith('extension_')) {
+      if (extension_node_name.startsWith('extension_') || extension_node_name.startsWith('node_')) {
         this.exts_statu[extension_node_name]['is_running'] =
           status_checked_map[content];
         console.log(`extension statu change to ${content}`);
       }
-      if (extension_node_name.startsWith('node_')) {
-        this.nodes_statu[extension_node_name]['is_running'] =
-          status_checked_map[content];
-        console.log(`node statu change to ${content}`);
-      }
+      // if (extension_node_name.startsWith('node_')) {
+        // this.nodes_statu[extension_node_name]['is_running'] =
+          // status_checked_map[content];
+        // console.log(`node statu change to ${content}`);
+      // }
     },
     selectMenuItem(key, keyPath) {
       console.log(`selectMenuItem:`, key, keyPath);
