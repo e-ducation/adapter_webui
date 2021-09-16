@@ -342,6 +342,8 @@ const extensions_bar = new Vue({
       }
     },
     check: function (state, node, pluginType) {
+      console.log(`-----------1111111111----------`);
+      console.log(`${pluginType}`);
       // console.log(`${e.target.value} ${e.target.checked}`);
       if (this.status !== 'connected!') {
         console.log('connected:', this.status);
