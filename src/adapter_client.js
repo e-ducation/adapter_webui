@@ -342,6 +342,11 @@ const extensions_bar = new Vue({
       }
     },
     check: function (state, node, pluginType) {
+      console.log(`-----------1111111111----------`);
+      console.log(`${pluginType}`);
+      if (node == "node_physical_blocks2"){
+        pluginType = "node";
+      }
       // console.log(`${e.target.value} ${e.target.checked}`);
       if (this.status !== 'connected!') {
         console.log('connected:', this.status);
@@ -423,11 +428,11 @@ const extensions_bar = new Vue({
           status_checked_map[content];
         console.log(`extension statu change to ${content}`);
       }
-      // if (extension_node_name.startsWith('node_')) {
-      this.nodes_statu[extension_node_name]['is_running'] =
-        status_checked_map[content];
-      console.log(`node statu change to ${content}`);
-      // }
+      if (extension_node_name.startsWith('node_')) {
+        this.nodes_statu[extension_node_name]['is_running'] =
+          status_checked_map[content];
+        console.log(`node statu change to ${content}`);
+      }
     },
     selectMenuItem(key, keyPath) {
       console.log(`selectMenuItem:`, key, keyPath);
